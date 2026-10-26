@@ -1,0 +1,282 @@
+[
+ {
+  "cat": "osobie",
+  "q": "Jaką ma Pani narodowość? A jakie obywatelstwo?",
+  "qu": "Якої Ви національності? А яке у Вас громадянство?",
+  "a": "Mam obywatelstwo ukraińskie, ale jestem narodowości polskiej. Czuję się Polką.",
+  "au": "У мене українське громадянство, але я польської національності. Я почуваюся полькою.",
+  "at": "мам обиватЕльство украІньскє, Але Єстем народовОсьці пОльскєй. чУє сє пОлькон."
+ },
+ {
+  "cat": "osobie",
+  "q": "Dlaczego uważa się Pani za Polkę?",
+  "qu": "Чому Ви вважаєте себе полькою?",
+  "a": "Moja [babcia] była Polką. Od dziecka znam polskie tradycje: Wigilię, opłatek, święconkę. Mówię po polsku i chcę żyć w Polsce. Polska to ojczyzna mojej rodziny.",
+  "au": "Моя [бабуся] була полькою. З дитинства я знаю польські традиції: Святвечір, облатку, свячене. Я говорю польською і хочу жити в Польщі. Польща — батьківщина моєї родини.",
+  "at": "мОя [babcia] бИва пОлькон. од дзЄцка знам пОльскє традИцьє: віґІлє, опвАтек, сьвєнцОнке. мУвє по пОльску і хце жиць в пОльсце. пОльска то ойчИзна мОєй родзІни."
+ },
+ {
+  "cat": "osobie",
+  "q": "Kto w Pani rodzinie był Polakiem? Gdzie mieszkał?",
+  "qu": "Хто у Вашій родині був поляком? Де він жив?",
+  "a": "Polakiem był mój [pradziadek], [imię i nazwisko]. Urodził się w [miejscowość] w [rok] roku. Potem mieszkał w [miejscowość].",
+  "au": "Поляком був мій [прадід], [ім'я та прізвище]. Він народився в [населений пункт] у [рік] році. Потім жив у [населений пункт].",
+  "at": "полАкєм бив муй [pradziadek], [imię i nazwisko]. урОдзів сє в [miejscowość] в [rok] рОку. пОтем мЄшкав в [miejscowość]."
+ },
+ {
+  "cat": "osobie",
+  "q": "Skąd Pani wie, że [pradziadek] był Polakiem?",
+  "qu": "Звідки Ви знаєте, що [прадід] був поляком?",
+  "a": "Wiem od mamy i babci. Mamy też dokumenty: [akt urodzenia / akt ślubu / dokument z archiwum]. Tam jest napisane: „narodowość polska”.",
+  "au": "Я знаю від мами і бабусі. У нас є також документи: [свідоцтво про народження / свідоцтво про шлюб / документ з архіву]. Там написано: «національність польська».",
+  "at": "вєм од мАми і бАбці. мАми теж докумЕнти: [akt urodzenia / akt ślubu / dokument z archiwum]. там єст напісАне: „народОвосьць пОльска”."
+ },
+ {
+  "cat": "osobie",
+  "q": "Co Pani [babcia] opowiadała o Polsce? Jakie tradycje przekazała?",
+  "qu": "Що Вам [бабуся] розповідала про Польщу? Які традиції вона передала?",
+  "a": "[Babcia] opowiadała o swojej rodzinie i o Polsce. Nauczyła nas dzielić się opłatkiem w Wigilię i święcić koszyczek na Wielkanoc. Śpiewała z nami polskie kolędy.",
+  "au": "[Бабуся] розповідала про свою родину і про Польщу. Вона навчила нас ділитися облаткою на Святвечір і святити кошик на Великдень. Вона співала з нами польські колядки.",
+  "at": "[Babcia] оповядАва о свОєй родзІнє і о пОльсце. научИва нас дзЄліць сє опвАткєм в віґІлє і сьвЄнціць кошИчек на вєлькАноц. сьпєвАва з нАмі пОльскє колЕнди."
+ },
+ {
+  "cat": "osobie",
+  "q": "Kto w Pani rodzinie mówi po polsku?",
+  "qu": "Хто у Вашій родині говорить польською?",
+  "a": "[Babcia] mówiła po polsku. Teraz ja mówię po polsku i dalej się uczę. [Moja córka też uczy się polskiego w szkole.]",
+  "au": "[Бабуся] говорила польською. Тепер я говорю польською і далі вчуся. [Моя донька теж вчить польську в школі.]",
+  "at": "[Babcia] мувІва по пОльску. тЕраз я мУвє по пОльску і дАлей сє Уче. [Moja córka też uczy się polskiego w szkole.]"
+ },
+ {
+  "cat": "osobie",
+  "q": "Jakie polskie tradycje kultywuje Pani w domu?",
+  "qu": "Які польські традиції Ви плекаєте вдома?",
+  "a": "W Wigilię czekamy na pierwszą gwiazdkę, dzielimy się opłatkiem i jemy dwanaście potraw. Na Wielkanoc święcę koszyczek i robię pisanki. Obchodzimy też imieniny.",
+  "au": "На Святвечір ми чекаємо першу зірку, ділимося облаткою і їмо дванадцять страв. На Великдень я свячу кошик і роблю писанки. Ми також святкуємо іменини.",
+  "at": "в віґІлє чекАми на пЄрвшон ґвЯздке, дзєлІми сє опвАткєм і Єми дванАсьцє пОтраф. на вєлькАноц сьвЄнце кошИчек і рОбє пісАнкі. обходзІми теж імєнІни."
+ },
+ {
+  "cat": "osobie",
+  "q": "A jak obchodziła Pani święta na Ukrainie?",
+  "qu": "А як Ви святкували свята в Україні?",
+  "a": "W mojej rodzinie Wigilia była podobna: dwanaście potraw, kutia, kolędy. [Babcia] zawsze miała opłatek. Dawniej na Ukrainie Boże Narodzenie było 7 stycznia. Od 2023 roku święto państwowe jest 25 grudnia, tak jak w Polsce.",
+  "au": "У моїй родині Святвечір був схожий: дванадцять страв, кутя, колядки. [Бабуся] завжди мала облатку. Раніше в Україні Різдво було 7 січня. З 2023 року державне свято — 25 грудня, як і в Польщі.",
+  "at": "в мОєй родзІнє віґІля бИва подОбна: дванАсьцє пОтраф, кУтя, колЕнди. [Babcia] зАвше мЯва опвАтек. дАвнєй на украІнє бОже народзЕнє бИво сюдмЕґо стИчня. од два тисьОнце двудзєстЕґо тшецЄґо рОку сьвЄнто паньствОве єст двудзєстЕґо пьонтЕґо ґрУдня, так як в пОльсце."
+ },
+ {
+  "cat": "osobie",
+  "q": "Czym różnią się polskie i ukraińskie święta Bożego Narodzenia?",
+  "qu": "Чим відрізняються польське й українське Різдво?",
+  "a": "Są bardzo podobne: dwanaście potraw, kutia, kolędy. W Polsce dzielimy się opłatkiem i zostawiamy puste miejsce dla gościa. Na Ukrainie w domu stawia się diducha, czyli snop zboża.",
+  "au": "Вони дуже схожі: дванадцять страв, кутя, колядки. У Польщі ми ділимося облаткою і залишаємо порожнє місце для гостя. В Україні в домі ставлять дідуха, тобто сніп збіжжя.",
+  "at": "сон бАрдзо подОбне: дванАсьцє пОтраф, кУтя, колЕнди. в пОльсце дзєлІми сє опвАткєм і зоставЯми пУсте мЄйсце для ґОсьця. на украІнє в дОму стАвя сє дідУха, чИлі сноп збОжа."
+ },
+ {
+  "cat": "osobie",
+  "q": "Czy chodzi Pani do kościoła?",
+  "qu": "Чи ходите Ви до костелу?",
+  "a": "Tak, na ważne święta chodzę do kościoła [parafii św. ...] w [miasto]: na Pasterkę, ze święconką i na rezurekcję. / Nieczęsto, ale znam polskie tradycje religijne i je szanuję.",
+  "au": "Так, на великі свята я ходжу до костелу [парафії св. ...] в [місто]: на Пастерку, зі свяченим кошиком і на резурекцію. / Нечасто, але я знаю польські релігійні традиції і поважаю їх.",
+  "at": "так, на вАжне сьвЄнта хОдзе до косьцьОва [parafii św. ...] в [miasto]: на пастЕрке, зе сьвєнцОнкон і на резурЕкцьє. / нєчЕнсто, Але знам пОльскє традИцьє реліґІйне і є шанУє."
+ },
+ {
+  "cat": "osobie",
+  "q": "Jak utrzymuje Pani kontakt z polską kulturą? Czy należy Pani do polskiej organizacji?",
+  "qu": "Як Ви підтримуєте зв'язок із польською культурою? Чи належите Ви до польської організації?",
+  "a": "Mieszkam w Polsce i codziennie mówię po polsku. Oglądam polskie filmy, czytam polskie książki, chodzę na festyny i koncerty. [Na Ukrainie należałam do Związku Polaków w ...]",
+  "au": "Я живу в Польщі і щодня говорю польською. Дивлюся польські фільми, читаю польські книжки, ходжу на фестини і концерти. [В Україні я належала до Спілки поляків у ...]",
+  "at": "мЄшкам в пОльсце і цодзЄннє мУвє по пОльску. оґлОндам пОльскє фІльми, чИтам пОльскє ксьОнжкі, хОдзе на фестИни і концЕрти. [Na Ukrainie należałam do Związku Polaków w ...]"
+ },
+ {
+  "cat": "osobie",
+  "q": "Jaki polski film albo jaką polską książkę Pani zna?",
+  "qu": "Який польський фільм або яку польську книжку Ви знаєте?",
+  "a": "Lubię film „Pianista” Romana Polańskiego. Znam też „Wiedźmina” Andrzeja Sapkowskiego. Teraz czytam [tytuł].",
+  "au": "Мені подобається фільм «Піаніст» Романа Поланського. Також я знаю «Відьмака» Анджея Сапковського. Зараз я читаю [назва].",
+  "at": "лУбє фільм „пянІста” ромАна поланьскЄґо. знам теж „вєдзьмІна” анджЕя сапковскЄґо. тЕраз чИтам [tytuł]."
+ },
+ {
+  "cat": "osobie",
+  "q": "Czy ma Pani męża i dzieci? Czy rodzina też chce mieszkać w Polsce?",
+  "qu": "Чи маєте Ви чоловіка і дітей? Чи родина теж хоче жити в Польщі?",
+  "a": "Jestem [mężatką / panną]. Mam [syna / córkę], [ma 10 lat]. Mieszkamy razem w [miasto]. Chcemy zostać w Polsce na stałe.",
+  "au": "Я [заміжня / незаміжня]. У мене є [син / донька], [йому / їй 10 років]. Ми живемо разом у [місто]. Ми хочемо залишитися в Польщі назавжди.",
+  "at": "Єстем [mężatką / panną]. мам [syna / córkę], [ma 10 lat]. мєшкАми рАзем в [miasto]. хцЕми зОстаць в пОльсце на стАве."
+ },
+ {
+  "cat": "religijne",
+  "q": "Które święta są ruchome, a które stałe?",
+  "qu": "Які свята рухомі, а які сталі?",
+  "a": "Ruchome są: Wielkanoc, Środa Popielcowa, Zielone Świątki i Boże Ciało. Ich data zależy od Wielkanocy. Stałe są na przykład: Boże Narodzenie 25 grudnia, Trzech Króli 6 stycznia, 15 sierpnia i 1 listopada.",
+  "au": "Рухомі: Великдень, Попільна середа, Зелені свята і Боже Тіло. Їхня дата залежить від Великодня. Сталі, наприклад: Різдво 25 грудня, Три королі 6 січня, 15 серпня і 1 листопада.",
+  "at": "рухОме сон: вєлькАноц, сьрОда попєльцОва, зєлОне сьвьОнткі і бОже цЯво. іх дАта залЕжи од вєльканОци. стАве сон на пшИквад: бОже народзЕнє двудзєстЕґо пьонтЕґо ґрУдня, тшех крУлі шустЕґо стИчня, пєнтнастЕґо сЄрпня і пєрвшЕґо лістопАда."
+ },
+ {
+  "cat": "wn",
+  "q": "Co to jest Triduum Paschalne?",
+  "qu": "Що таке Пасхальне тридення?",
+  "a": "To trzy najważniejsze dni w roku dla katolików, przed Wielkanocą. Wielki Czwartek — Ostatnia Wieczerza. Wielki Piątek — śmierć Jezusa na krzyżu. Wielka Sobota — Grób Pański, święconka, a wieczorem Wigilia Paschalna.",
+  "au": "Це три найважливіші дні в році для католиків, перед Великоднем. Великий четвер — Тайна вечеря. Велика п'ятниця — смерть Ісуса на хресті. Велика субота — Гріб Господній, освячення кошиків, а ввечері Пасхальна вігілія.",
+  "at": "то тши найважнЄйше дні в рОку для католІкуф, пшед вєльканОцон. вЄлькі чвАртек — остАтня вєчЕжа. вЄлькі пьОнтек — сьмєрць єзУса на кшИжу. вЄлька собОта — ґруп пАньскі, сьвєнцОнка, а вєчОрем віґІля пасхАльна."
+ },
+ {
+  "cat": "religijne",
+  "q": "Kto jest patronem Polski?",
+  "qu": "Хто є покровителем Польщі?",
+  "a": "Patronami Polski są święty Wojciech i święty Stanisław. Królową Polski jest Matka Boża. Jej święto jest 3 maja. Ważny jest też obraz Matki Boskiej Częstochowskiej na Jasnej Górze.",
+  "au": "Покровителі Польщі — святий Войцех і святий Станіслав. Королевою Польщі є Матір Божа. Її свято — 3 травня. Важлива також ікона Ченстоховської Божої Матері на Ясній Горі.",
+  "at": "патронАмі пОльскі сон сьвЄнти вОйцєх і сьвЄнти станІсваф. крулОвон пОльскі єст мАтка бОжа. єй сьвЄнто єст тшецЄґо мАя. вАжни єст теж Образ мАткі бОскєй ченстохОвскєй на Ясней ґУже."
+ },
+ {
+  "cat": "zwyczaje",
+  "q": "Co to są katarzynki?",
+  "qu": "Що таке катажинки?",
+  "a": "Katarzynki są 24 listopada, przed dniem świętej Katarzyny. To wieczór wróżb, podobny do andrzejek. Dawniej chłopcy wróżyli sobie, jaką dziewczynę poznają.",
+  "au": "Катажинки — 24 листопада, напередодні дня святої Катерини. Це вечір ворожіння, схожий на андржейки. Раніше хлопці ворожили, з якою дівчиною познайомляться.",
+  "at": "катажИнкі сон двудзєстЕґо чвартЕґо лістопАда, пшед днєм сьвЄнтей катажИни. то вЄчур вружп, подОбни до анджЕєк. дАвнєй хвОпци вружИлі сОбє, Якон дзєвчИне познАйон."
+ },
+ {
+  "cat": "panstwowe",
+  "q": "Co to jest Dzień Polonii i Polaków za Granicą?",
+  "qu": "Що таке День Полонії та поляків за кордоном?",
+  "a": "To święto jest 2 maja, razem z Dniem Flagi. Wspominamy Polaków, którzy mieszkają za granicą, i ich związek z Polską. To dzień także dla takich osób jak moja rodzina.",
+  "au": "Це свято 2 травня, разом із Днем прапора. Ми згадуємо поляків, які живуть за кордоном, і їхній зв'язок із Польщею. Це день і для таких людей, як моя родина.",
+  "at": "то сьвЄнто єст друґЄґо мАя, рАзем з днєм флАґі. фспомінАми полАкуф, ктУжи мєшкАйон за ґранІцон, і іх звьОнзек з пОльскон. то дзєнь тАкже для тАкіх Осуп як мОя родзІна."
+ },
+ {
+  "cat": "panstwowe",
+  "q": "Kiedy Polacy wywieszają flagę?",
+  "qu": "Коли поляки вивішують прапор?",
+  "a": "Na święta państwowe: 1, 2 i 3 maja i 11 listopada. Także 15 sierpnia i 1 sierpnia, w rocznicę Powstania Warszawskiego. Flaga jest biało-czerwona.",
+  "au": "На державні свята: 1, 2 і 3 травня та 11 листопада. Також 15 серпня і 1 серпня, у річницю Варшавського повстання. Прапор біло-червоний.",
+  "at": "на сьвЄнта паньствОве: пєрвшЕґо, друґЄґо і тшецЄґо мАя і єденастЕґо лістопАда. тАкже пєнтнастЕґо сЄрпня і пєрвшЕґо сЄрпня, в рочнІце повстАня варшавскЄґо. флАґа єст бЯво-червОна."
+ },
+ {
+  "cat": "symbole",
+  "q": "Ile zwrotek ma hymn? Proszę powiedzieć dalej.",
+  "qu": "Скільки куплетів має гімн? Скажіть, будь ласка, далі.",
+  "a": "Hymn ma cztery zwrotki. Druga: „Przejdziem Wisłę, przejdziem Wartę, będziem Polakami. Dał nam przykład Bonaparte, jak zwyciężać mamy.” Trzecia: „Jak Czarniecki do Poznania po szwedzkim zaborze, dla ojczyzny ratowania wrócim się przez morze.” Czwarta: „Mówił ojciec do swej Basi cały zapłakany: Słuchaj jeno, pono nasi biją w tarabany.” Po każdej zwrotce jest refren: „Marsz, marsz, Dąbrowski…”.",
+  "au": "Гімн має чотири куплети. Другий: «Перейдемо Віслу, перейдемо Варту, будемо поляками. Бонапарт дав нам приклад, як перемагати». Третій: «Як Чарнецький до Познані після шведської навали, для порятунку батьківщини повернемося через море». Четвертий: «Говорив батько своїй Басі, весь у сльозах: Послухай-но, кажуть, наші б'ють у барабани». Після кожного куплета — приспів: «Марш, марш, Домбровський…».",
+  "at": "химн ма чтЕри зврОткі. дрУґа: „пшЕйдзєм вІсве, пшЕйдзєм вАрте, бЕндзєм полакАмі. дав нам пшИквад бонапАрте, як звицЄнжаць мАми.” тшЕця: „як чарнЄцкі до познАня по швЕдзкім забОже, для ойчИзни ратовАня врУцім сє пшез мОже.” чвАрта: „мУвів Ойцєц до свей бАсі цАви запвакАни: свУхай Єно, пОно нАсі бІйон в тарабАни.” по кАждей зврОтце єст рЕфрен: „марш, марш, домбрОвскі…”."
+ },
+ {
+  "cat": "symbole",
+  "q": "Jakich prezydentów Polski po 1989 roku Pani zna?",
+  "qu": "Яких президентів Польщі після 1989 року Ви знаєте?",
+  "a": "Lech Wałęsa, Aleksander Kwaśniewski, Lech Kaczyński, Bronisław Komorowski, Andrzej Duda, a od 2025 roku Karol Nawrocki. Na początku, krótko, prezydentem był jeszcze Wojciech Jaruzelski.",
+  "au": "Лех Валенса, Александр Квасневський, Лех Качинський, Броніслав Коморовський, Анджей Дуда, а з 2025 року Кароль Навроцький. На початку, недовго, президентом був ще Войцех Ярузельський.",
+  "at": "лех вавЕнса, алексАндер квасьнЄвскі, лех качИньскі, бронІсваф коморОвскі, Анджей дУда, а од два тисьОнце двудзєстЕґо пьонтЕґо рОку кАроль наврОцкі. на почОнтку, крУтко, президЕнтем бив Єшче вОйцєх ярузЕльскі."
+ },
+ {
+  "cat": "historia",
+  "q": "Kim była królowa Jadwiga?",
+  "qu": "Ким була королева Ядвіга?",
+  "a": "Jadwiga była królową Polski od 1384 roku. Wyszła za mąż za Władysława Jagiełłę. Tak zaczęła się unia Polski z Litwą i dynastia Jagiellonów. Pomogła odnowić Akademię Krakowską. W 1997 roku Jan Paweł II ogłosił ją świętą.",
+  "au": "Ядвіга була королевою Польщі з 1384 року. Вона вийшла заміж за Владислава Ягайла. Так почалися унія Польщі з Литвою і династія Ягеллонів. Вона допомогла відновити Краківську академію. У 1997 році Іван Павло II проголосив її святою.",
+  "at": "ядвІґа бИва крулОвон пОльскі од тИсьонц тшИста осємдзєсьонтЕґо чвартЕґо рОку. вИшва за монж за ввадисвАва яґЄвве. так зачЕва сє Уня пОльскі з лІтвон і динАстя яґєллОнуф. помОґва однОвіць акадЕмє кракОвскон. в тИсьонц дзєвєньсЕт дзєвєньдзєсьОнтим сЮдмим рОку ян пАвев дрУґі оґвОсів йон сьвЄнтон."
+ },
+ {
+  "cat": "historia",
+  "q": "Kim był Tadeusz Kościuszko?",
+  "qu": "Ким був Тадеуш Костюшко?",
+  "a": "To bohater narodowy Polski i Stanów Zjednoczonych. W 1794 roku prowadził powstanie, czyli insurekcję kościuszkowską. Wygrał bitwę pod Racławicami. W Krakowie jest Kopiec Kościuszki.",
+  "au": "Це національний герой Польщі та Сполучених Штатів. У 1794 році він очолив повстання — Костюшківське повстання. Він виграв битву під Рацлавицями. У Кракові є Курган Костюшка.",
+  "at": "то бохАтер народОви пОльскі і стАнуф зьєдночОних. в тИсьонц сєдемсЕт дзєвєньдзєсьОнтим чвАртим рОку провАдзів повстАнє, чИлі інсурЕкцьє косьцюшкОвскон. вИґрав бІтве под рацвавіцАмі. в кракОвє єст кОпєц косьцЮшкі."
+ },
+ {
+  "cat": "historia",
+  "q": "Kto był ostatnim królem Polski?",
+  "qu": "Хто був останнім королем Польщі?",
+  "a": "Stanisław August Poniatowski. W czasie jego panowania, w 1791 roku, uchwalono Konstytucję 3 Maja. Po trzecim rozbiorze, w 1795 roku, Polska zniknęła z mapy.",
+  "au": "Станіслав Август Понятовський. Під час його правління, у 1791 році, ухвалили Конституцію 3 Травня. Після третього поділу, у 1795 році, Польща зникла з карти.",
+  "at": "станІсваф Ауґуст понятОвскі. в чАсє Єґо пановАня, в тИсьонц сєдемсЕт дзєвєньдзєсьОнтим пЄрвшим рОку, ухвалОно конститУцьє тшецЄґо мАя. по тшЕцім розбьОже, в тИсьонц сєдемсЕт дзєвєньдзєсьОнтим пьОнтим рОку, пОльска знікнЕва з мАпи."
+ },
+ {
+  "cat": "historia",
+  "q": "Kim był Kazimierz Wielki?",
+  "qu": "Ким був Казимир Великий?",
+  "a": "To ostatni król z dynastii Piastów. Mówi się, że „zastał Polskę drewnianą, a zostawił murowaną”. W 1364 roku założył Akademię Krakowską. Dziś to Uniwersytet Jagielloński.",
+  "au": "Це останній король з династії П'ястів. Кажуть, що він «застав Польщу дерев'яною, а залишив мурованою». У 1364 році він заснував Краківську академію. Сьогодні це Ягеллонський університет.",
+  "at": "то остАтні круль з динАстьї пЯстуф. мУві сє, же „зАстав пОльске древнЯнон, а зостАвів муровАнон”. в тИсьонц тшИста шесьцьдзєсьОнтим чвАртим рОку завОжив акадЕмє кракОвскон. дзісь то універсИтет яґєллОньскі."
+ },
+ {
+  "cat": "historia",
+  "q": "Co Pani wie o dynastii Jagiellonów?",
+  "qu": "Що Ви знаєте про династію Ягеллонів?",
+  "a": "Pierwszym królem z tej dynastii był Władysław Jagiełło. Wygrał bitwę pod Grunwaldem w 1410 roku. Ostatnim był Zygmunt August. Zmarł w 1572 roku. To był złoty wiek Polski. Potem króla wybierała szlachta.",
+  "au": "Першим королем з цієї династії був Владислав Ягайло. Він виграв битву під Грюнвальдом у 1410 році. Останнім був Сигізмунд Август. Він помер у 1572 році. Це був золотий вік Польщі. Потім короля обирала шляхта.",
+  "at": "пЄрвшим крУлем з тей динАстьї бив ввадИсваф яґЄвво. вИґрав бІтве под ґрунвАльдем в тИсьонц чтерИста дзєсьОнтим рОку. остАтнім бив зИґмунт Ауґуст. змарв в тИсьонц пєньцьсЕт сєдемдзєсьОнтим дрУґім рОку. то бив звОти вєк пОльскі. пОтем крУла вибєрАва шлАхта."
+ },
+ {
+  "cat": "historia",
+  "q": "Co to była bitwa pod Płowcami?",
+  "qu": "Що це була за битва під Пловцями?",
+  "a": "To bitwa z Krzyżakami w 1331 roku. Polskim wojskiem dowodził król Władysław Łokietek. Polacy pokazali, że mogą walczyć z zakonem krzyżackim.",
+  "au": "Це битва з хрестоносцями в 1331 році. Польським військом командував король Владислав Локетек. Поляки показали, що можуть воювати з Тевтонським орденом.",
+  "at": "то бІтва з кшижакАмі в тИсьонц тшИста тшидзЄстим пЄрвшим рОку. пОльскім вОйскєм довОдзів круль ввадИсваф вокЄтек. полАци показАлі, же мОґон вАльчиць з закОнем кшижАцкім."
+ },
+ {
+  "cat": "historia",
+  "q": "Co to była zbrodnia katyńska?",
+  "qu": "Що таке Катинський злочин?",
+  "a": "W 1940 roku sowieckie NKWD zamordowało około 22 tysięcy Polaków, głównie oficerów, między innymi w Katyniu. 13 kwietnia jest Dzień Pamięci Ofiar Zbrodni Katyńskiej.",
+  "au": "У 1940 році радянський НКВС убив близько 22 тисяч поляків, переважно офіцерів, зокрема в Катині. 13 квітня — День пам'яті жертв Катинського злочину.",
+  "at": "в тИсьонц дзєвєньсЕт чтердзЄстим рОку совЄцкє енкавудЕ замордовАво окОво двудзЄсту двух тисЄнци полАкуф, ґвУвнє офіцЕруф, мЄндзи іннИмі в катИню. тшинастЕґо квЄтня єст дзєнь памЄнці Офяр збрОдні катИньскєй."
+ },
+ {
+  "cat": "historia",
+  "q": "Co Pani wie o wydarzeniach na Wołyniu?",
+  "qu": "Що Ви знаєте про події на Волині?",
+  "a": "W latach 1943–1944 ukraińscy nacjonaliści z UPA zamordowali na Wołyniu dziesiątki tysięcy Polaków. W Polsce nazywa się to ludobójstwem. 11 lipca jest Narodowy Dzień Pamięci Ofiar. To bardzo smutna historia. Trzeba pamiętać o ofiarach i budować pojednanie.",
+  "au": "У 1943–1944 роках українські націоналісти з УПА вбили на Волині десятки тисяч поляків. У Польщі це називають геноцидом. 11 липня — Національний день пам'яті жертв. Це дуже сумна історія. Треба пам'ятати про жертв і будувати примирення.",
+  "at": "в лАтах тИсьонц дзєвєньсЕт чтердзЄсьці тши – чтердзЄсьці чтЕри украІньсци нацйоналІсьці з упеА замордовАлі на вовИню дзєсьОнткі тисЄнци полАкуф. в пОльсце назИва сє то лудобУйствем. єденастЕґо лІпца єст народОви дзєнь памЄнці Офяр. то бАрдзо смУтна хістОря. тшЕба памЄнтаць о офЯрах і будОваць поєднАнє."
+ },
+ {
+  "cat": "historia",
+  "q": "Kim byli Żołnierze Wyklęci?",
+  "qu": "Ким були «Прокляті солдати»?",
+  "a": "To polscy żołnierze, którzy po II wojnie światowej walczyli z władzą komunistyczną. Wielu zginęło. 1 marca jest Narodowy Dzień Pamięci Żołnierzy Wyklętych.",
+  "au": "Це польські солдати, які після Другої світової війни боролися з комуністичною владою. Багато з них загинуло. 1 березня — Національний день пам'яті «Проклятих солдатів».",
+  "at": "то пОльсци жовнЄже, ктУжи по дрУґєй вОйнє сьвятОвей вальчИлі з ввАдзон комуністИчнон. вЄлу зґінЕво. пєрвшЕґо мАрца єст народОви дзєнь памЄнці жовнЄжи виклЕнтих."
+ },
+ {
+  "cat": "geografia",
+  "q": "Jakie polskie miasta leżą nad Bałtykiem?",
+  "qu": "Які польські міста лежать на березі Балтійського моря?",
+  "a": "Gdańsk, Gdynia i Sopot — razem to Trójmiasto. Także Kołobrzeg, Świnoujście i Władysławowo. Jest też Półwysep Helski.",
+  "au": "Гданськ, Гдиня і Сопот — разом це Тримісто. Також Колобжег, Свіноуйсьце і Владиславово. Є ще Гельський півострів.",
+  "at": "ґданьск, ґдИня і сОпот — рАзем то труймЯсто. тАкже ковОбжек, сьвіноУйсьцє і ввадисвавОво. єст теж пуввИсеп хЕльскі."
+ },
+ {
+  "cat": "geografia",
+  "q": "Jakie miejsca w Polsce są na liście UNESCO?",
+  "qu": "Які місця в Польщі є у списку ЮНЕСКО?",
+  "a": "Na przykład: Stare Miasto w Krakowie, Kopalnia Soli w Wieliczce, Stare Miasto w Warszawie, Zamek w Malborku, Toruń, Puszcza Białowieska i Auschwitz-Birkenau.",
+  "au": "Наприклад: Старе місто в Кракові, соляна шахта у Величці, Старе місто у Варшаві, замок у Мальборку, Торунь, Біловезька пуща та Аушвіц-Біркенау.",
+  "at": "на пшИквад: стАре мЯсто в кракОвє, копАльня сОлі в вєлІчце, стАре мЯсто в варшАвє, зАмек в мальбОрку, тОрунь, пУшча бявовЄска і Аушвіц-біркЕнау."
+ },
+ {
+  "cat": "geografia",
+  "q": "Jakie parki narodowe Pani zna?",
+  "qu": "Які національні парки Ви знаєте?",
+  "a": "W Polsce jest ponad dwadzieścia parków narodowych. Na przykład: Tatrzański, Białowieski, gdzie żyją żubry, Kampinoski koło Warszawy i Słowiński z wydmami nad morzem.",
+  "au": "У Польщі понад двадцять національних парків. Наприклад: Татранський, Біловезький, де живуть зубри, Кампіноський біля Варшави і Словінський з дюнами біля моря.",
+  "at": "в пОльсце єст пОнад двадзЄсьця пАркуф народОвих. на пшИквад: татшАньскі, бявовЄскі, ґдзє жИйон жУбри, кампінОскі кОво варшАви і свовІньскі з видмАмі над мОжем."
+ },
+ {
+  "cat": "geografia",
+  "q": "W jakim województwie Pani mieszka? Jakie jest miasto wojewódzkie?",
+  "qu": "У якому воєводстві Ви живете? Яке воєводське місто?",
+  "a": "Mieszkam w województwie [mazowieckim]. Miasto wojewódzkie to [Warszawa]. Niedaleko mnie jest [rzeka / ciekawe miejsce].",
+  "au": "Я живу в [Мазовецькому] воєводстві. Воєводське місто — [Варшава]. Недалеко від мене є [річка / цікаве місце].",
+  "at": "мЄшкам в воєвУдзтвє [mazowieckim]. мЯсто воєвУдзкє то [Warszawa]. нєдалЕко мнє єст [rzeka / ciekawe miejsce]."
+ },
+ {
+  "cat": "geografia",
+  "q": "Jaka jest powierzchnia Polski?",
+  "qu": "Яка площа Польщі?",
+  "a": "Polska ma około 312 tysięcy kilometrów kwadratowych. Dzieli się na 16 województw, a województwa na powiaty i gminy.",
+  "au": "Площа Польщі — близько 312 тисяч квадратних кілометрів. Вона поділяється на 16 воєводств, а воєводства — на повіти і гміни.",
+  "at": "пОльска ма окОво тшИста дванАсьцє тисЄнци кіломЕтруф квадратОвих. дзЄлі сє на шеснАсьцє воЄвудзтф, а воєвУдзтва на повЯти і ґмІни."
+ }
+]
