@@ -120,6 +120,9 @@
     cal: '<path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/>',
     gear: '<path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>',
     chev: '<path d="M9 6l6 6l-6 6"/>',
+    eye: '<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/>',
+    download: '<path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/>',
+    upload: '<path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 9l5 -5l5 5"/><path d="M12 4l0 12"/>',
     sparkle: '<path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/>',
     hands: '<path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"/><path d="M12 6l-3.293 3.293a1 1 0 0 0 0 1.414l.543 .543c.69 .69 1.81 .69 2.5 0l1 -1a3.182 3.182 0 0 1 4.5 0l2.25 2.25"/>',
     flag: '<path d="M5 5a5 5 0 0 1 7 0a5 5 0 0 0 7 0v9a5 5 0 0 1 -7 0a5 5 0 0 0 -7 0v-9z"/><path d="M5 21v-7"/>',
@@ -179,10 +182,10 @@
 
   // Підстава заяви — підлаштовує AI-питання. Порожньо = польське походження.
   var BASES = [
-    ["great", "Польське походження — двоє прадідів", "polskie pochodzenie (art. 195 ust. 1 pkt 3 ustawy o cudzoziemcach): dwoje pradziadków narodowości polskiej"],
-    ["origin", "Польське походження — батьки або дід/баба", "polskie pochodzenie (art. 195 ust. 1 pkt 3 ustawy o cudzoziemcach): rodzic lub dziadek narodowości polskiej"],
+    ["great", "Походження: двоє прадідів", "polskie pochodzenie (art. 195 ust. 1 pkt 3 ustawy o cudzoziemcach): dwoje pradziadków narodowości polskiej"],
+    ["origin", "Походження: батьки, дід чи баба", "polskie pochodzenie (art. 195 ust. 1 pkt 3 ustawy o cudzoziemcach): rodzic lub dziadek narodowości polskiej"],
     ["karta", "Карта поляка", "posiadacz Karty Polaka, zamiar osiedlenia się w Polsce na stałe"],
-    ["marriage", "Шлюб із громадянином Польщі", "małżeństwo z obywatelem polskim (co najmniej 3 lata, 2 lata pobytu czasowego)"],
+    ["marriage", "Шлюб з громадянином Польщі", "małżeństwo z obywatelem polskim (co najmniej 3 lata, 2 lata pobytu czasowego)"],
     ["other", "Інше (вписати)", ""],
   ];
   function basisText() {
@@ -627,9 +630,9 @@
         return '<div class="msg me" lang="pl">' + esc(m.text) + "</div>" + fbHtml(m.fb);
       }).join("") + (busy ? '<div class="typing"><span class="spin"></span> урядниця пише…</div>' : "") + "</div>" +
         (chatErr ? '<p class="err">' + esc(chatErr) + "</p>" : "") +
-        '<form class="composer" id="form"><textarea id="msg" rows="1" placeholder="Odpowiedz po polsku…" lang="pl" aria-label="Ваша відповідь"></textarea><button class="send" aria-label="Відправити"' + (busy ? " disabled" : "") + ">" + ic("send", "") + "</button></form>";
+        '<div class="dock"><form class="composer" id="form">' + micButton() + '<textarea id="msg" rows="1" placeholder="Odpowiedz po polsku…" lang="pl" aria-label="Ваша відповідь"></textarea><button class="send" aria-label="Відправити"' + (busy ? " disabled" : "") + ">" + ic("send", "") + "</button></form>" + '<p class="micstat" id="micstat" role="status" hidden></p></div>';
     }
-    view.innerHTML = h;
+    view.innerHTML = '<div class="chatpage' + (S.chat.length ? " live" : "") + '">' + h + "</div>";
     view.querySelectorAll("[data-topic]").forEach(function (b) { b.onclick = function () { S.settings.chatTopic = b.dataset.topic; save(); viewChat(); }; });
     var st = document.getElementById("start"); if (st) st.onclick = function () { sendChat(null); };
     var rs = document.getElementById("reset"); if (rs) rs.onclick = function () { if (busy) return toast("Зачекайте на відповідь урядниці"); if (confirm("Почати нову розмову?")) { S.chat = []; chatErr = ""; save(); viewChat(); } };
@@ -637,7 +640,9 @@
     if (form) {
       var ta = document.getElementById("msg");
       ta.value = S.settings.draft || "";
-      ta.oninput = function () { S.settings.draft = ta.value; ta.style.height = "auto"; ta.style.height = Math.min(160, ta.scrollHeight) + "px"; save(); };
+      var growC = function () { ta.style.height = "auto"; ta.style.height = Math.min(160, ta.scrollHeight) + "px"; };
+      ta.oninput = function () { S.settings.draft = ta.value; growC(); save(); };
+      bindMic(ta, function (v) { S.settings.draft = v; growC(); save(); });
       form.onsubmit = function (e) {
         e.preventDefault();
         var v = ta.value.trim();
@@ -828,13 +833,13 @@
         return '<div class="msg me" lang="pl">' + esc(m.text) + "</div>" + fbHtml(m.fb);
       }).join("") + (drillBusy ? '<div class="typing"><span class="spin"></span> урядниця слухає…</div>' : "") + "</div>" +
         (drillErr ? '<p class="err">' + esc(drillErr) + "</p>" : "") +
-        '<form class="composer" id="dform">' + micButton() +
+        '<div class="dock"><form class="composer" id="dform">' + micButton() +
         '<textarea id="dmsg" rows="1" placeholder="Odpowiedz po polsku…" lang="pl" aria-label="Ваша відповідь"></textarea>' +
         '<button class="send" aria-label="Відправити"' + (drillBusy ? " disabled" : "") + ">" + ic("send", "") + "</button></form>" +
         '<p class="micstat" id="micstat" role="status" hidden></p>' +
-        '<button class="btn sm ghost" id="dskip" style="margin:0 auto 8px;display:flex">' + ic("skip", "ic") + " Наступне питання</button>";
+        '<button class="btn sm ghost skip" id="dskip">' + ic("skip", "ic") + " Наступне питання</button></div>";
     }
-    view.innerHTML = h;
+    view.innerHTML = '<div class="chatpage' + (M.msgs.length ? " live" : "") + '">' + h + "</div>";
 
     view.querySelectorAll("[data-dt]").forEach(function (b) { b.onclick = function () { M.topic = b.dataset.dt; save(); viewDrill(); }; });
     var st = document.getElementById("dstart"); if (st) st.onclick = function () { drillErr = ""; drillAsk(); viewDrill(); };
@@ -979,19 +984,37 @@
   }
   function viewSettings() {
     frame({ tab: "me", title: "Налаштування", back: true });
+    var hasCode = !!(S.settings.passcode || "").trim();
     view.innerHTML =
-      '<label class="f" for="bs">Підстава заяви</label><select id="bs">' + BASES.map(function (b) {
+      '<div class="group"><div class="gt">Співбесіда</div>' +
+      '<div class="field"><label for="bs">Підстава заяви</label><div class="sel"><select id="bs">' + BASES.map(function (b) {
         return '<option value="' + b[0] + '"' + ((S.settings.basis || "great") === b[0] ? " selected" : "") + ">" + esc(b[1]) + "</option>";
-      }).join("") + "</select>" +
-      '<input type="text" id="bso" lang="pl" placeholder="Np. praca, studia…" value="' + esc(S.settings.basisOther || "") + '"' + (S.settings.basis === "other" ? "" : " hidden") + ' style="margin-top:8px">' +
-      '<p class="hint">AI-урядниця ставитиме питання саме під цю підставу.</p>' +
-      '<label class="f" for="iv">Дата співбесіди</label><input type="date" id="iv" value="' + esc(S.settings.interview || "") + '">' +
-      '<label class="f" for="st">Перший день навчання</label><input type="date" id="st" value="' + esc(S.settings.start || "") + '"><p class="hint">Від нього рахується план на 30 днів.</p>' +
-      '<label class="f" for="pc">Код доступу до AI</label><input type="password" id="pc" autocomplete="off" value="' + esc(S.settings.passcode || "") + '"><p class="hint">Код дає той, хто налаштував застосунок.</p>' +
-      '<label class="f">Резервна копія</label><div class="btns"><button class="btn ghost" id="exp">Зберегти копію</button><button class="btn ghost" id="imp">Відновити з файлу</button></div>' +
-      '<input type="file" id="impf" accept="application/json,.json" hidden>' +
-      '<p class="hint">Прогрес зберігається на цьому телефоні. Раз на тиждень зберігайте копію-файл — з неї можна відновити все на новому телефоні.</p>' +
-      '<button class="btn block" id="wipe" style="margin-top:28px;color:var(--oops)">Скинути весь прогрес</button>';
+      }).join("") + "</select>" + ic("chev", "ic selchev") + "</div>" +
+      '<input type="text" id="bso" lang="pl" placeholder="Np. praca, studia…" value="' + esc(S.settings.basisOther || "") + '"' + (S.settings.basis === "other" ? "" : " hidden") + ">" +
+      '<p class="hint">AI-урядниця ставитиме питання саме під цю підставу.</p></div>' +
+      '<div class="field"><label for="iv">Дата співбесіди</label><input type="date" id="iv" value="' + esc(S.settings.interview || "") + '"></div></div>' +
+
+      '<div class="group"><div class="gt">AI</div>' +
+      '<div class="field"><label for="pc">Код доступу</label><div class="pw"><input type="password" id="pc" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="введіть код" value="' + esc(S.settings.passcode || "") + '">' +
+      '<button type="button" class="eye" id="eye" aria-label="Показати код">' + ic("eye", "") + "</button></div>" +
+      '<p class="hint" id="pcst">' + (hasCode ? '<span class="okdot"></span>Код збережено на цьому пристрої' : "Код дає той, хто налаштував застосунок.") + "</p></div></div>" +
+
+      '<div class="group"><div class="gt">Навчання</div>' +
+      '<div class="field"><label for="st">Перший день плану</label><input type="date" id="st" value="' + esc(S.settings.start || "") + '"><p class="hint">Від нього рахується план на 30 днів.</p></div></div>' +
+
+      '<div class="group"><div class="gt">Резервна копія</div>' +
+      '<p class="hint" style="margin:0 0 10px">Прогрес зберігається на цьому телефоні. Раз на тиждень збережіть копію — з неї можна відновити все на новому телефоні.</p>' +
+      '<button class="btn ghost block" id="exp">' + ic("download") + " Зберегти копію</button>" +
+      '<button class="btn block" id="imp" style="margin-top:8px">' + ic("upload") + " Відновити з файлу</button>" +
+      '<input type="file" id="impf" accept="application/json,.json" hidden></div>' +
+
+      '<button class="btn block danger" id="wipe">Скинути весь прогрес</button>';
+    var pcIn = document.getElementById("pc");
+    document.getElementById("eye").onclick = function () {
+      var show = pcIn.type === "password";
+      pcIn.type = show ? "text" : "password";
+      this.setAttribute("aria-label", show ? "Сховати код" : "Показати код");
+    };
     document.getElementById("exp").onclick = function () {
       var name = "polski-kopiya-" + todayStr() + ".json";
       var blob = new Blob([JSON.stringify({ app: "karina-polski", v: 1, saved: new Date().toISOString(), state: S })], { type: "application/json" });
@@ -1027,7 +1050,11 @@
     document.getElementById("bso").onchange = function (e) { S.settings.basisOther = e.target.value.trim(); save(); toast("Збережено"); };
     document.getElementById("iv").onchange = function (e) { S.settings.interview = e.target.value; save(); toast("Збережено"); };
     document.getElementById("st").onchange = function (e) { if (e.target.value) { S.settings.start = e.target.value; save(); toast("Збережено"); } };
-    document.getElementById("pc").onchange = function (e) { S.settings.passcode = e.target.value.trim(); save(); toast("Збережено"); };
+    pcIn.onchange = function (e) {
+      S.settings.passcode = e.target.value.trim(); save();
+      document.getElementById("pcst").innerHTML = S.settings.passcode ? '<span class="okdot"></span>Код збережено на цьому пристрої' : "Код дає той, хто налаштував застосунок.";
+      toast("Збережено");
+    };
     document.getElementById("wipe").onclick = function () {
       if (!confirm("Видалити весь прогрес, помилки, розмову та історію? Це не можна скасувати.")) return;
       var keep = { start: todayStr() };

@@ -1,5 +1,5 @@
 // Офлайн-кеш. Під час оновлення файлів збільшуйте VERSION.
-var VERSION = "kp-v10";
+var VERSION = "kp-v11";
 var FILES = ["./", "index.html", "styles.css", "app.js", "data.js", "srs.js", "manifest.webmanifest", "icons/icon.svg", "icons/icon-192.png", "icons/icon-512.png"];
 
 self.addEventListener("install", function (e) {
