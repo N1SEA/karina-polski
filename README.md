@@ -28,11 +28,14 @@ ANTHROPIC_API_KEY=sk-ant-...
 APP_PASSCODE=будь-який-код
 ```
 
-## Деплой на Vercel (сайт + AI)
+## Деплой на Vercel (сайт + AI) — рекомендовано
 
-1. Імпортувати папку/репозиторій у Vercel (Framework: Other, без build-команди).
-2. Environment Variables: `ANTHROPIC_API_KEY`, `APP_PASSCODE`.
-3. Відкрити сайт на телефоні → «Я → Налаштування» → ввести код доступу → «Додати на головний екран».
+1. Імпортувати репозиторій у Vercel (Framework: Other, без build-команди).
+2. Environment Variables: `ANTHROPIC_API_KEY` (ключ Claude — лише тут, на сервері), `APP_PASSCODE` (будь-який код).
+3. Надіслати користувачці посилання `https://ПРОЄКТ.vercel.app/#/setup/КОД` — застосунок сам запам’ятає код
+   (його можна також ввести в «Я → Налаштування»). Потім «Додати на головний екран».
+
+Ключ API ніколи не потрапляє на телефон: телефон звертається до `/api/examiner`, а сервер — до Claude.
 
 ## GitHub Pages (лише статичний сайт)
 
