@@ -17,7 +17,7 @@
     });
     var d = obj(o.drill);
     s.drill = {
-      msgs: (Array.isArray(d.msgs) ? d.msgs : []).filter(function (m) { return m && typeof m.text === "string" && ["examiner", "karina", "note"].indexOf(m.role) >= 0; }).slice(-MAX_CHAT),
+      msgs: (Array.isArray(d.msgs) ? d.msgs : []).filter(function (m) { return m && typeof m.text === "string" && ["examiner", "karina", "note", "teach"].indexOf(m.role) >= 0; }).slice(-MAX_CHAT),
       cur: typeof d.cur === "string" ? d.cur : null,
       follows: typeof d.follows === "number" ? d.follows : 0,
       topic: typeof d.topic === "string" ? d.topic : "top",
@@ -120,6 +120,9 @@
     cal: '<path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/>',
     gear: '<path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"/><path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/>',
     chev: '<path d="M9 6l6 6l-6 6"/>',
+    bulb: '<path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7"/><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"/><path d="M9.7 17l4.6 0"/>',
+    quote: '<path d="M10 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"/><path d="M19 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"/>',
+    pen: '<path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/><path d="M13.5 6.5l4 4"/>',
     eye: '<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"/><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"/>',
     download: '<path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 11l5 5l5 -5"/><path d="M12 4l0 12"/>',
     upload: '<path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 9l5 -5l5 5"/><path d="M12 4l0 12"/>',
@@ -175,9 +178,28 @@
   var VERDICT = { good: "Добре", almost: "Майже добре", wrong: "Варто виправити" };
   function fbHtml(r) {
     if (!r || r.verdict === "none" || !r.verdict) return "";
-    var fix = r.corrected_pl ? '<div class="fix">' + esc(r.corrected_pl) + "</div>" : "";
+    var fix = r.corrected_pl ? '<div class="fix" lang="pl">' + esc(r.corrected_pl) + "</div>" : "";
     var tip = r.tip_uk ? '<div style="margin-top:6px">' + esc(r.tip_uk) + "</div>" : "";
-    return '<div class="fb ' + esc(r.verdict) + '"><b>' + (VERDICT[r.verdict] || "") + "</b>" + esc(r.feedback_uk) + tip + fix + "</div>";
+    return '<div class="fb ' + esc(r.verdict) + '"><b>' + (VERDICT[r.verdict] || "") + "</b>" + esc(r.feedback_uk) + tip + fix + "</div>" + teachHtml(r);
+  }
+  // Блок «учительки»: що важливо знати, корисні фрази, граматика.
+  function cleanPhrases(p) {
+    return (Array.isArray(p) ? p : []).filter(function (x) { return x && typeof x.pl === "string" && x.pl.trim(); }).slice(0, 4);
+  }
+  function teach(r) {
+    return { lesson_uk: r.lesson_uk || "", phrases: cleanPhrases(r.phrases), grammar_uk: r.grammar_uk || "" };
+  }
+  function teachHtml(r, title) {
+    if (!r) return "";
+    var ph = cleanPhrases(r.phrases);
+    var parts = [];
+    if (r.lesson_uk) parts.push('<div class="tsec"><b>' + ic("bulb", "ic") + (title || "Що важливо знати") + "</b><p>" + esc(r.lesson_uk) + "</p></div>");
+    if (ph.length) parts.push('<div class="tsec"><b>' + ic("quote", "ic") + "Корисні фрази</b>" + ph.map(function (x) {
+      return '<div class="phr"><span lang="pl">' + esc(x.pl) + "</span><small>" + esc(x.uk || "") + "</small></div>";
+    }).join("") + "</div>");
+    if (r.sample_pl) parts.push('<div class="tsec"><b>' + ic("check", "ic") + 'Можна відповісти так</b><p lang="pl" class="sample">' + esc(r.sample_pl) + "</p>" + (r.sample_uk ? "<small>" + esc(r.sample_uk) + "</small>" : "") + "</div>");
+    if (r.grammar_uk) parts.push('<div class="tsec"><b>' + ic("pen", "ic") + "Граматика</b><p>" + esc(r.grammar_uk) + "</p></div>");
+    return parts.length ? '<div class="teach">' + parts.join("") + "</div>" : "";
   }
 
   // Підстава заяви — підлаштовує AI-питання. Порожньо = польське походження.
@@ -660,7 +682,7 @@
     api({ mode: "chat", topics: TOPIC_PL[S.settings.chatTopic || "mix"], history: S.chat.map(function (m) { return { role: m.role, text: m.text }; }) })
       .then(function (r) {
         var last = S.chat[S.chat.length - 1];
-        if (last && last.role === "karina") last.fb = { verdict: r.verdict, feedback_uk: r.feedback_uk, corrected_pl: r.corrected_pl };
+        if (last && last.role === "karina") last.fb = Object.assign({ verdict: r.verdict, feedback_uk: r.feedback_uk, corrected_pl: r.corrected_pl }, teach(r));
         S.chat.push({ role: "examiner", text: r.next_question_pl, tr: r.next_question_uk });
         if (text) touch("chats"); else save();
       })
@@ -829,6 +851,7 @@
     } else {
       h += '<div class="chat">' + M.msgs.map(function (m) {
         if (m.role === "examiner") return '<div class="msg ex' + (m.qid ? "" : " follow") + '" lang="pl">' + esc(m.text) + (m.tr ? '<div class="tr" lang="uk">' + esc(m.tr) + "</div>" : "") + "</div>";
+        if (m.role === "teach") return '<div class="teachwrap"><span class="lbl">Пояснення вчительки</span>' + teachHtml(m, "Про що питання") + "</div>";
         if (m.role === "note") return '<div class="note"><span class="lbl">Взірцева відповідь</span><p lang="pl">' + esc(m.text) + '</p><div class="pron"><span class="lbl">Вимова</span>' + pron(m.at || "") + '</div><p class="au">' + esc(m.tr || "") + "</p></div>";
         return '<div class="msg me" lang="pl">' + esc(m.text) + "</div>" + fbHtml(m.fb);
       }).join("") + (drillBusy ? '<div class="typing"><span class="spin"></span> урядниця слухає…</div>' : "") + "</div>" +
@@ -837,7 +860,7 @@
         '<textarea id="dmsg" rows="1" placeholder="Odpowiedz po polsku…" lang="pl" aria-label="Ваша відповідь"></textarea>' +
         '<button class="send" aria-label="Відправити"' + (drillBusy ? " disabled" : "") + ">" + ic("send", "") + "</button></form>" +
         '<p class="micstat" id="micstat" role="status" hidden></p>' +
-        '<button class="btn sm ghost skip" id="dskip">' + ic("skip", "ic") + " Наступне питання</button></div>";
+        '<div class="dacts"><button class="btn sm ghost" id="dexplain">' + ic("bulb", "ic") + ' Поясни</button><button class="btn sm ghost" id="dskip">' + ic("skip", "ic") + " Наступне питання</button></div></div>";
     }
     view.innerHTML = '<div class="chatpage' + (M.msgs.length ? " live" : "") + '">' + h + "</div>";
 
@@ -848,6 +871,8 @@
       if (drillBusy) return toast("Зачекайте на відповідь урядниці");
       if (confirm("Почати чат заново? Прогрес карток збережеться.")) { S.drill.msgs = []; S.drill.cur = null; drillErr = ""; save(); viewDrill(); }
     };
+    var ex = document.getElementById("dexplain");
+    if (ex) ex.onclick = function () { drillExplain(ex); };
     var sk = document.getElementById("dskip");
     if (sk) sk.onclick = function () { if (drillBusy) return; drillShowModel(); drillAsk(); drillErr = ""; viewDrill(); };
     var form = document.getElementById("dform");
@@ -866,6 +891,21 @@
       if (!drillBusy) setTimeout(function () { window.scrollTo(0, document.body.scrollHeight); }, 0);
     }
   }
+  function drillExplain(btn) {
+    if (drillBusy || !S.drill.cur) return;
+    var d = byId[S.drill.cur];
+    if (!d) return;
+    drillBusy = true; drillErr = "";
+    btn.setAttribute("aria-busy", "true"); btn.innerHTML = '<span class="spin"></span> Пояснюю…';
+    api({ mode: "explain", question: d.q, model_answer: d.a })
+      .then(function (r) {
+        var t = teach(r);
+        S.drill.msgs.push({ role: "teach", text: t.lesson_uk || "", lesson_uk: t.lesson_uk, phrases: t.phrases, sample_pl: r.sample_pl || "", sample_uk: r.sample_uk || "" });
+        save();
+      })
+      .catch(function (e) { drillErr = aiError(e); })
+      .then(function () { drillBusy = false; if (location.hash.indexOf("#/drill") === 0) viewDrill(); });
+  }
   function drillSend(text) {
     if (drillBusy || !S.drill.cur) return;
     var M = S.drill, d = byId[M.cur];
@@ -876,14 +916,14 @@
     // нитка поточного питання — від його появи; раніші відповіді — для контексту уточнень
     var start = 0;
     for (var i = M.msgs.length - 1; i >= 0; i--) if (M.msgs[i].qid === M.cur) { start = i; break; }
-    var thread = M.msgs.slice(start).filter(function (m) { return m.role !== "note"; }).map(function (m) { return { role: m.role, text: m.text }; });
+    var thread = M.msgs.slice(start).filter(function (m) { return m.role === "examiner" || m.role === "karina"; }).map(function (m) { return { role: m.role, text: m.text }; });
     var earlier = M.msgs.slice(0, start).filter(function (m) { return m.role === "karina"; }).map(function (m) { return m.text; });
     var first = thread.filter(function (m) { return m.role === "karina"; }).length === 1;
     drillBusy = true; save(); viewDrill();
     api({ mode: "drill", question: d.q, model_answer: d.a, thread: thread, earlier: earlier, allow_followup: M.follows < MAX_FOLLOWUPS })
       .then(function (r) {
         var last = M.msgs[M.msgs.length - 1];
-        last.fb = { verdict: r.verdict, feedback_uk: r.feedback_uk, corrected_pl: r.corrected_pl };
+        last.fb = Object.assign({ verdict: r.verdict, feedback_uk: r.feedback_uk, corrected_pl: r.corrected_pl }, teach(r));
         if (first) {
           var g = r.verdict === "good" ? 2 : r.verdict === "almost" ? 1 : r.verdict === "wrong" ? 0 : null;
           if (g !== null) { S.srs = SRS.grade(S.srs, M.cur, g, Date.now()); if (g === 0) S.wrong[M.cur] = 1; }

@@ -271,7 +271,6 @@ body.focus { padding-bottom: env(safe-area-inset-bottom); }
 .chatpage.live .chat { flex: 1; justify-content: flex-end; }
 .dock { position: sticky; bottom: calc(68px + env(safe-area-inset-bottom)); background: var(--bg); padding: 8px 0 4px; margin: 0 -16px; padding-left: 16px; padding-right: 16px; border-top: 1px solid var(--line); }
 .composer { display: flex; gap: 8px; align-items: flex-end; }
-.dock .skip { display: flex; margin: 8px auto 0; }
 .dock .micstat { margin: 6px 0 0; }
 .composer textarea { flex: 1; min-height: 48px; max-height: 160px; border-radius: 22px; padding: 12px 16px; resize: none; }
 .send { width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--pink); color: var(--on-pink); flex: none; display: flex; align-items: center; justify-content: center; }
@@ -292,6 +291,20 @@ body.focus { padding-bottom: env(safe-area-inset-bottom); }
 .mic[aria-busy="true"] { opacity: .6; pointer-events: none; }
 @keyframes pulse { 50% { box-shadow: 0 0 0 9px color-mix(in srgb, var(--pink) 10%, transparent); } }
 @media (prefers-reduced-motion: reduce) { .mic.on { animation: none; } }
+
+.teach { align-self: stretch; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--pink-mid); border-radius: 0 14px 14px 0; padding: 10px 12px; font-size: 14px; line-height: 1.45; display: flex; flex-direction: column; gap: 10px; }
+.tsec > b { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--pink-strong); margin-bottom: 3px; }
+.tsec > b .ic { width: 16px; height: 16px; }
+.tsec p { margin: 0; }
+.tsec small { display: block; color: var(--muted); font-size: 13px; margin-top: 2px; }
+.tsec .sample { font-weight: 600; }
+.phr { padding: 6px 0; }
+.phr + .phr { border-top: 1px dashed var(--line); }
+.phr span { display: block; font-weight: 600; }
+.teachwrap { align-self: stretch; }
+.teachwrap > .lbl { display: block; font-size: 11px; color: var(--hint); margin: 0 0 4px 4px; }
+.dacts { display: flex; justify-content: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.dacts .btn .ic { width: 18px; height: 18px; }
 
 /* форми */
 textarea, input[type=text], input[type=password], select { -webkit-appearance: none; appearance: none; }

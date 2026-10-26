@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { buildChatMessages, buildCheckMessages, buildGenerateMessages, buildDrillMessages, cleanGenerated, parseResult, handle, MODEL, BadRequest } from "../lib/examiner.js";
+import { buildChatMessages, buildCheckMessages, buildGenerateMessages, buildDrillMessages, buildExplainMessages, cleanGenerated, parseResult, handle, MODEL, BadRequest } from "../lib/examiner.js";
 
 test("generate: topic required, count clamped, existing listed", () => {
   assert.throws(() => buildGenerateMessages({ topic: "" }), BadRequest);
@@ -157,4 +157,23 @@ test("handle: drill returns feedback and optional follow-up", async () => {
   assert.equal(out.status, 200);
   assert.equal(out.json.followup_pl, "A dlaczego?");
   assert.ok(cap.params.output_config.format.schema.required.includes("followup_pl"));
+});
+
+test("teaching fields are required in every feedback schema", async () => {
+  const { CHAT_SCHEMA, CHECK_SCHEMA, DRILL_SCHEMA } = await import("../lib/examiner.js");
+  for (const s of [CHAT_SCHEMA, CHECK_SCHEMA, DRILL_SCHEMA]) {
+    for (const k of ["lesson_uk", "phrases", "grammar_uk"]) assert.ok(s.required.includes(k), k);
+    assert.equal(s.properties.phrases.items.additionalProperties, false);
+  }
+});
+
+test("explain: needs a question; returns lesson, phrases and a sample", async () => {
+  assert.throws(() => buildExplainMessages({ question: "" }), BadRequest);
+  assert.match(buildExplainMessages({ question: "Co to jest opłatek?", model_answer: "Wafel." })[0].content, /Pytanie: Co to jest opłatek\?/);
+  const reply = { lesson_uk: "Облатка — тонкий вафель.", phrases: [{ pl: "dzielimy się opłatkiem", uk: "ділимося облаткою" }], sample_pl: "To cienki wafel.", sample_uk: "Це тонкий вафель." };
+  const cap = {};
+  const out = await handle({ method: "POST", headers: {}, body: { mode: "explain", question: "Co to jest opłatek?" } }, { client: fakeClient(textReply(reply), cap) });
+  assert.equal(out.status, 200);
+  assert.equal(out.json.phrases[0].pl, "dzielimy się opłatkiem");
+  assert.ok(cap.params.output_config.format.schema.required.includes("sample_pl"));
 });
