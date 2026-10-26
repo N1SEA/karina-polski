@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { handle } from "./lib/examiner.js";
+import { handleTranscribe, readBody } from "./lib/transcribe.js";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const envFile = path.join(root, ".env.local");
@@ -32,6 +33,12 @@ async function getClient() {
 const port = Number(process.env.PORT) || 5174;
 http.createServer(async (req, res) => {
   const url = new URL(req.url, "http://localhost");
+  if (url.pathname === "/api/transcribe") {
+    const body = req.method === "POST" ? await readBody(req) : null;
+    const out = await handleTranscribe({ method: req.method, headers: req.headers, body }, { apiKey: process.env.OPENAI_API_KEY, passcode: process.env.APP_PASSCODE });
+    res.writeHead(out.status, { "content-type": "application/json" });
+    return res.end(JSON.stringify(out.json));
+  }
   if (url.pathname === "/api/examiner") {
     let raw = "";
     for await (const chunk of req) raw += chunk;

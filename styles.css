@@ -281,6 +281,9 @@ body.focus { padding-bottom: env(safe-area-inset-bottom); }
 .mic { width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--pink-soft); color: var(--pink-ink); flex: none; display: flex; align-items: center; justify-content: center; }
 .mic svg { width: 22px; height: 22px; }
 .mic.on { background: var(--pink); color: var(--on-pink); box-shadow: 0 0 0 4px color-mix(in srgb, var(--pink) 30%, transparent); animation: pulse 1.2s ease-in-out infinite; }
+.micstat { text-align: center; font-size: 13px; color: var(--pink-strong); margin: 0 0 8px; }
+.micstat[hidden] { display: none; }
+.mic[aria-busy="true"] { opacity: .6; pointer-events: none; }
 @keyframes pulse { 50% { box-shadow: 0 0 0 9px color-mix(in srgb, var(--pink) 10%, transparent); } }
 @media (prefers-reduced-motion: reduce) { .mic.on { animation: none; } }
 

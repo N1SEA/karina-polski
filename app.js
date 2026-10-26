@@ -668,35 +668,122 @@
   }
 
   // ---------- голосовий ввід (лише розпізнавання, без звуку) ----------
+  // 1) Запис з мікрофона → /api/transcribe (OpenAI) — працює і на iPhone в застосунку з екрана.
+  // 2) Якщо на сервері немає ключа — вбудоване розпізнавання браузера.
+  // 3) Інакше — підказка про мікрофон на клавіатурі.
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  var rec = null;
-  function micButton() { return '<button type="button" class="mic" id="mic" aria-label="Говорити польською">' + ic("mic", "") + "</button>"; }
+  var rec = null, recState = null, sttOff = false;
+  var MAX_REC = 60000;
+  function canRecord() { return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder); }
+  function pickMime() {
+    var c = ["audio/mp4", "audio/webm;codecs=opus", "audio/webm", "audio/ogg"];
+    for (var i = 0; i < c.length; i++) if (MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(c[i])) return c[i];
+    return "";
+  }
+  function micButton() {
+    return '<button type="button" class="mic" id="mic" aria-label="Говорити польською">' + ic("mic", "") + "</button>";
+  }
+  function micStatus(text) {
+    var el = document.getElementById("micstat");
+    if (!el) return;
+    el.hidden = !text; el.textContent = text || "";
+  }
+  function insertText(ta, text, onText) {
+    if (!text) return;
+    ta.value = (ta.value ? ta.value.replace(/\s*$/, " ") : "") + text;
+    onText(ta.value);
+  }
   function bindMic(ta, onText) {
     var btn = document.getElementById("mic");
     if (!btn) return;
     btn.onclick = function () {
-      if (rec) { rec.stop(); return; }
-      if (!SR) { toast("Тут голос не підтримується — натисніть мікрофон на клавіатурі телефона"); ta.focus(); return; }
-      var base = ta.value ? ta.value.replace(/\s*$/, " ") : "";
-      try {
-        rec = new SR();
-        rec.lang = "pl-PL"; rec.interimResults = true; rec.continuous = true;
-        rec.onresult = function (e) {
-          var t = "";
-          for (var i = 0; i < e.results.length; i++) t += e.results[i][0].transcript;
-          ta.value = base + t.trim();
-          onText(ta.value);
-        };
-        rec.onerror = function (e) {
-          if (e.error === "not-allowed" || e.error === "service-not-allowed") toast("Дозвольте доступ до мікрофона або скористайтеся мікрофоном на клавіатурі");
-        };
-        rec.onend = function () { rec = null; btn.classList.remove("on"); };
-        rec.start();
-        btn.classList.add("on");
-      } catch (err) { rec = null; toast("Не вдалося увімкнути мікрофон — скористайтеся мікрофоном на клавіатурі"); }
+      if (recState) return recState.stop();
+      if (rec) return rec.stop();
+      if (canRecord() && !sttOff) return startRecording(btn, ta, onText);
+      startBrowserSR(btn, ta, onText);
     };
   }
-  function stopMic() { if (rec) { try { rec.stop(); } catch (e) { /* вже зупинено */ } rec = null; } }
+  function startRecording(btn, ta, onText) {
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+      var mime = pickMime(), chunks = [];
+      var mr = mime ? new MediaRecorder(stream, { mimeType: mime }) : new MediaRecorder(stream);
+      var started = Date.now(), discard = false;
+      var tick = setInterval(function () {
+        var s = Math.round((Date.now() - started) / 1000);
+        micStatus("● " + Math.floor(s / 60) + ":" + pad(s % 60) + " — говоріть польською, натисніть мікрофон ще раз, щоб закінчити");
+        if (Date.now() - started > MAX_REC) mr.stop();
+      }, 250);
+      recState = {
+        stop: function () { if (mr.state !== "inactive") mr.stop(); },
+        cancel: function () { discard = true; if (mr.state !== "inactive") mr.stop(); },
+      };
+      mr.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
+      mr.onstop = function () {
+        clearInterval(tick);
+        stream.getTracks().forEach(function (t) { t.stop(); });
+        recState = null; btn.classList.remove("on");
+        if (discard) return micStatus("");
+        var type = (mr.mimeType || mime || "audio/mp4").split(";")[0];
+        var blob = new Blob(chunks, { type: type });
+        if (blob.size < 1000) return micStatus("Запис занадто короткий — спробуйте ще раз");
+        micStatus("Розпізнаю…"); btn.setAttribute("aria-busy", "true");
+        transcribe(blob).then(function (text) {
+          micStatus(text ? "" : "Нічого не почула — спробуйте ще раз, ближче до мікрофона");
+          insertText(ta, text, onText);
+        }).catch(function (e) {
+          if (e.status === 503) {
+            sttOff = true; micStatus("");
+            toast("Розпізнавання голосу ще не підключено на сервері");
+            if (SR) startBrowserSR(btn, ta, onText);
+          } else micStatus(e.status === 401 ? aiError(e) : "Не вдалося розпізнати — спробуйте ще раз");
+        }).then(function () { btn.removeAttribute("aria-busy"); });
+      };
+      mr.start(1000);
+      btn.classList.add("on");
+      micStatus("● 0:00 — говоріть польською");
+    }).catch(function (e) {
+      if (e && (e.name === "NotAllowedError" || e.name === "SecurityError")) {
+        toast("Дозвольте мікрофон: Налаштування → Safari (або Chrome) → Мікрофон → Дозволити");
+      } else startBrowserSR(btn, ta, onText);
+    });
+  }
+  function transcribe(blob) {
+    return fetch((API_BASE ? API_BASE + "/" : "") + "api/transcribe", {
+      method: "POST",
+      headers: { "content-type": blob.type, "x-passcode": S.settings.passcode || "" },
+      body: blob,
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (!r.ok) { var e = new Error(j.error || "error"); e.status = r.status; throw e; }
+        return (j.text || "").trim();
+      });
+    });
+  }
+  function startBrowserSR(btn, ta, onText) {
+    if (!SR) { toast("Тут голос не підтримується — натисніть мікрофон на клавіатурі телефона"); ta.focus(); return; }
+    var base = ta.value ? ta.value.replace(/\s*$/, " ") : "";
+    try {
+      rec = new SR();
+      rec.lang = "pl-PL"; rec.interimResults = true; rec.continuous = true;
+      rec.onresult = function (e) {
+        var t = "";
+        for (var i = 0; i < e.results.length; i++) t += e.results[i][0].transcript;
+        ta.value = base + t.trim();
+        onText(ta.value);
+      };
+      rec.onerror = function (e) {
+        if (e.error === "not-allowed" || e.error === "service-not-allowed") toast("Дозвольте доступ до мікрофона або скористайтеся мікрофоном на клавіатурі");
+      };
+      rec.onend = function () { rec = null; btn.classList.remove("on"); micStatus(""); };
+      rec.start();
+      btn.classList.add("on");
+      micStatus("● говоріть польською, натисніть мікрофон ще раз, щоб закінчити");
+    } catch (err) { rec = null; toast("Не вдалося увімкнути мікрофон — скористайтеся мікрофоном на клавіатурі"); }
+  }
+  function stopMic() {
+    if (recState) recState.cancel();
+    if (rec) { try { rec.stop(); } catch (e) { /* вже зупинено */ } rec = null; }
+  }
 
   // ---------- чат: питання з банку, відповіді своїми словами, AI уточнює ----------
   var drillBusy = false, drillErr = "";
@@ -744,6 +831,7 @@
         '<form class="composer" id="dform">' + micButton() +
         '<textarea id="dmsg" rows="1" placeholder="Odpowiedz po polsku…" lang="pl" aria-label="Ваша відповідь"></textarea>' +
         '<button class="send" aria-label="Відправити"' + (drillBusy ? " disabled" : "") + ">" + ic("send", "") + "</button></form>" +
+        '<p class="micstat" id="micstat" role="status" hidden></p>' +
         '<button class="btn sm ghost" id="dskip" style="margin:0 auto 8px;display:flex">' + ic("skip", "ic") + " Наступне питання</button>";
     }
     view.innerHTML = h;
