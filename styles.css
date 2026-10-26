@@ -165,7 +165,7 @@ body.focus { padding-bottom: env(safe-area-inset-bottom); }
 .a { font-size: 18px; line-height: 1.45; margin: 0; }
 .pron { background: var(--soft); border-radius: 14px; padding: 10px 12px; line-height: 1.55; font-size: 16px; }
 .pron .lbl { display: block; font-size: 11px; color: var(--hint); margin-bottom: 2px; }
-.pron .st { color: var(--pink-strong); font-weight: 700; }
+.pron .st { display: inline; margin: 0; color: var(--pink-strong); font-weight: 700; }
 .au { color: var(--muted); margin: 0; line-height: 1.45; }
 .grades { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
 .grades button { border: 0; border-radius: 16px; min-height: 62px; font-weight: 650; font-size: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
@@ -237,7 +237,7 @@ body.focus { padding-bottom: env(safe-area-inset-bottom); }
 .opt.wrong .lt { background: var(--oops-mid); color: var(--oops-ink); }
 .opt:disabled { cursor: default; }
 .explain { background: var(--pink-soft); color: var(--pink-ink); border-radius: 16px; padding: 12px 14px; line-height: 1.45; margin-bottom: 12px; }
-.explain b { display: flex; gap: 6px; align-items: center; margin-bottom: 4px; }
+.explain > b { display: flex; gap: 6px; align-items: center; margin-bottom: 4px; }
 .explain .pron { background: color-mix(in srgb, var(--surface) 60%, transparent); margin-top: 8px; }
 .sticky-next { position: sticky; bottom: calc(12px + env(safe-area-inset-bottom)); }
 
@@ -261,7 +261,7 @@ body.focus { padding-bottom: env(safe-area-inset-bottom); }
 .msg.ex .tr { color: var(--muted); font-size: 13px; margin-top: 4px; }
 .msg.me { align-self: flex-end; background: var(--pink); color: var(--on-pink); border-radius: 20px 20px 6px 20px; white-space: pre-wrap; }
 .fb { align-self: flex-end; max-width: 92%; border-radius: 16px; padding: 10px 12px; font-size: 14px; line-height: 1.45; }
-.fb b { display: block; }
+.fb > b { display: block; }
 .fb.good { background: var(--ok-soft); color: var(--ok-ink); }
 .fb.almost { background: var(--pink-soft); color: var(--pink-ink); }
 .fb.wrong { background: var(--oops-soft); color: var(--oops-ink); }
