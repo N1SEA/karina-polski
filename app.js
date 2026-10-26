@@ -15,6 +15,13 @@
     s.extra = (Array.isArray(o.extra) ? o.extra : []).filter(function (d) {
       return d && typeof d === "object" && ["cat", "q", "qu", "a", "au", "at"].every(function (k) { return typeof d[k] === "string" && d[k]; });
     });
+    var d = obj(o.drill);
+    s.drill = {
+      msgs: (Array.isArray(d.msgs) ? d.msgs : []).filter(function (m) { return m && typeof m.text === "string" && ["examiner", "karina", "note"].indexOf(m.role) >= 0; }).slice(-MAX_CHAT),
+      cur: typeof d.cur === "string" ? d.cur : null,
+      follows: typeof d.follows === "number" ? d.follows : 0,
+      topic: typeof d.topic === "string" ? d.topic : "top",
+    };
     s.chat = (Array.isArray(o.chat) ? o.chat : []).filter(function (m) { return m && typeof m.text === "string" && (m.role === "examiner" || m.role === "karina"); }).slice(-MAX_CHAT);
     var isDate = function (v) { return typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v); };
     if (!isDate(s.settings.start)) s.settings.start = dstr(Date.now());
@@ -28,6 +35,7 @@
   var saveWarned = false;
   function save() {
     if (S.chat.length > MAX_CHAT) S.chat = S.chat.slice(-MAX_CHAT);
+    if (S.drill.msgs.length > MAX_CHAT) S.drill.msgs = S.drill.msgs.slice(-MAX_CHAT);
     try { localStorage.setItem(KEY, JSON.stringify(S)); saveWarned = false; }
     catch (e) {
       if (!saveWarned) { saveWarned = true; toast("Не вдалося зберегти прогрес. Збережіть копію в «Я → Налаштування»."); }
@@ -92,6 +100,9 @@
     home: '<path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/>',
     cards: '<path d="M3.604 7.197l7.138 -3.109a.96 .96 0 0 1 1.27 .527l4.924 11.902a1 1 0 0 1 -.514 1.304l-7.137 3.109a.96 .96 0 0 1 -1.271 -.527l-4.924 -11.903a1 1 0 0 1 .514 -1.304z"/><path d="M15 4h1a1 1 0 0 1 1 1v3.5"/><path d="M20 6c.264 .112 .52 .217 .768 .315a1 1 0 0 1 .53 1.311l-2.298 5.374"/>',
     tests: '<path d="M3.5 5.5l1.5 1.5l2.5 -2.5"/><path d="M3.5 11.5l1.5 1.5l2.5 -2.5"/><path d="M3.5 17.5l1.5 1.5l2.5 -2.5"/><path d="M11 6l9 0"/><path d="M11 12l9 0"/><path d="M11 18l9 0"/>',
+    drill: '<path d="M8 9h8"/><path d="M8 13h6"/><path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"/>',
+    mic: '<path d="M9 2m0 3a3 3 0 0 1 3 -3h0a3 3 0 0 1 3 3v5a3 3 0 0 1 -3 3h0a3 3 0 0 1 -3 -3z"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M8 21l8 0"/><path d="M12 17l0 4"/>',
+    skip: '<path d="M4 5v14l12 -7z"/><path d="M20 5l0 14"/>',
     chat: '<path d="M3 20l1.3 -3.9c-2.324 -3.437 -1.426 -7.872 2.1 -10.374c3.526 -2.501 8.59 -2.296 11.845 .48c3.255 2.777 3.695 7.266 1.029 10.501c-2.666 3.235 -7.615 4.215 -11.574 2.293l-4.7 1"/>',
     me: '<path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/>',
     check: '<path d="M5 12l5 5l10 -10"/>',
@@ -116,7 +127,7 @@
   function ic(name, cls) { return '<svg class="' + (cls || "ic") + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + I[name] + "</svg>"; }
 
   // ---------- нижня панель ----------
-  var TABS = [["home", "#/", "Головна"], ["cards", "#/learn", "Вчити"], ["tests", "#/tests", "Тести"], ["chat", "#/chat", "Розмова"], ["me", "#/me", "Я"]];
+  var TABS = [["home", "#/", "Головна"], ["cards", "#/learn", "Вчити"], ["tests", "#/tests", "Тести"], ["drill", "#/drill", "Чат"], ["chat", "#/chat", "Розмова"], ["me", "#/me", "Я"]];
   document.getElementById("tabs").innerHTML = TABS.map(function (t) {
     return '<a href="' + t[1] + '" data-tab="' + t[0] + '"><span class="pill">' + ic(t[0], "") + "</span>" + t[2] + "</a>";
   }).join("");
@@ -656,6 +667,151 @@
       .then(function () { busy = false; if (location.hash.indexOf("#/chat") === 0) viewChat(); });
   }
 
+  // ---------- голосовий ввід (лише розпізнавання, без звуку) ----------
+  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var rec = null;
+  function micButton() { return '<button type="button" class="mic" id="mic" aria-label="Говорити польською">' + ic("mic", "") + "</button>"; }
+  function bindMic(ta, onText) {
+    var btn = document.getElementById("mic");
+    if (!btn) return;
+    btn.onclick = function () {
+      if (rec) { rec.stop(); return; }
+      if (!SR) { toast("Тут голос не підтримується — натисніть мікрофон на клавіатурі телефона"); ta.focus(); return; }
+      var base = ta.value ? ta.value.replace(/\s*$/, " ") : "";
+      try {
+        rec = new SR();
+        rec.lang = "pl-PL"; rec.interimResults = true; rec.continuous = true;
+        rec.onresult = function (e) {
+          var t = "";
+          for (var i = 0; i < e.results.length; i++) t += e.results[i][0].transcript;
+          ta.value = base + t.trim();
+          onText(ta.value);
+        };
+        rec.onerror = function (e) {
+          if (e.error === "not-allowed" || e.error === "service-not-allowed") toast("Дозвольте доступ до мікрофона або скористайтеся мікрофоном на клавіатурі");
+        };
+        rec.onend = function () { rec = null; btn.classList.remove("on"); };
+        rec.start();
+        btn.classList.add("on");
+      } catch (err) { rec = null; toast("Не вдалося увімкнути мікрофон — скористайтеся мікрофоном на клавіатурі"); }
+    };
+  }
+  function stopMic() { if (rec) { try { rec.stop(); } catch (e) { /* вже зупинено */ } rec = null; } }
+
+  // ---------- чат: питання з банку, відповіді своїми словами, AI уточнює ----------
+  var drillBusy = false, drillErr = "";
+  var MAX_FOLLOWUPS = 2;
+  function drillPool() {
+    var t = S.drill.topic;
+    return ids(function (d) {
+      if (d.cat === "ratunek") return false;
+      if (t === "top") return d.top;
+      if (t === "all") return true;
+      return d.cat === t;
+    });
+  }
+  function drillAsk() {
+    var id = SRS.pickNext(drillPool(), S.srs, Date.now(), Math.random, S.drill.cur);
+    var d = byId[id];
+    if (!d) return;
+    S.drill.cur = id; S.drill.follows = 0;
+    S.drill.msgs.push({ role: "examiner", text: d.q, tr: d.qu, qid: id });
+    save();
+  }
+  function drillShowModel() {
+    var d = byId[S.drill.cur];
+    if (d) S.drill.msgs.push({ role: "note", text: d.a, at: d.at, tr: d.au });
+  }
+  function viewDrill() {
+    stopMic();
+    var M = S.drill;
+    frame({ tab: "drill", title: "Чат", aside: M.msgs.length ? '<button class="btn sm ghost" id="dreset">Нова</button>' : "" });
+    var topics = [["top", "⭐ Топ"], ["all", "Усі"]].concat(CATS.filter(function (c) { return c.id !== "ratunek"; }).map(function (c) { return [c.id, c.icon + " " + c.name]; }));
+    var h = "";
+    if (!M.msgs.length) {
+      h += '<div class="card"><p style="margin-top:0">Урядниця ставить питання з бази по черзі. Відповідайте <b>своїми словами</b> — голосом (кнопка мікрофона) або текстом. AI оцінить відповідь, підкаже українською і, якщо є про що, поставить 1–2 уточнення, як на справжній співбесіді.</p><p class="small muted" style="margin-bottom:0">Після кожного питання ви побачите взірцеву відповідь.</p></div>' +
+        '<div class="sec">Питання</div><div class="chips" style="flex-wrap:wrap;overflow:visible">' + topics.map(function (t) {
+          return '<button class="chip' + (t[0] === M.topic ? " on" : "") + '" data-dt="' + t[0] + '">' + esc(t[1]) + "</button>";
+        }).join("") + "</div>" +
+        '<button class="btn primary block" id="dstart" style="margin-top:8px">Почати</button>';
+    } else {
+      h += '<div class="chat">' + M.msgs.map(function (m) {
+        if (m.role === "examiner") return '<div class="msg ex' + (m.qid ? "" : " follow") + '" lang="pl">' + esc(m.text) + (m.tr ? '<div class="tr" lang="uk">' + esc(m.tr) + "</div>" : "") + "</div>";
+        if (m.role === "note") return '<div class="note"><span class="lbl">Взірцева відповідь</span><p lang="pl">' + esc(m.text) + '</p><div class="pron"><span class="lbl">Вимова</span>' + pron(m.at || "") + '</div><p class="au">' + esc(m.tr || "") + "</p></div>";
+        return '<div class="msg me" lang="pl">' + esc(m.text) + "</div>" + fbHtml(m.fb);
+      }).join("") + (drillBusy ? '<div class="typing"><span class="spin"></span> урядниця слухає…</div>' : "") + "</div>" +
+        (drillErr ? '<p class="err">' + esc(drillErr) + "</p>" : "") +
+        '<form class="composer" id="dform">' + micButton() +
+        '<textarea id="dmsg" rows="1" placeholder="Odpowiedz po polsku…" lang="pl" aria-label="Ваша відповідь"></textarea>' +
+        '<button class="send" aria-label="Відправити"' + (drillBusy ? " disabled" : "") + ">" + ic("send", "") + "</button></form>" +
+        '<button class="btn sm ghost" id="dskip" style="margin:0 auto 8px;display:flex">' + ic("skip", "ic") + " Наступне питання</button>";
+    }
+    view.innerHTML = h;
+
+    view.querySelectorAll("[data-dt]").forEach(function (b) { b.onclick = function () { M.topic = b.dataset.dt; save(); viewDrill(); }; });
+    var st = document.getElementById("dstart"); if (st) st.onclick = function () { drillErr = ""; drillAsk(); viewDrill(); };
+    var rs = document.getElementById("dreset");
+    if (rs) rs.onclick = function () {
+      if (drillBusy) return toast("Зачекайте на відповідь урядниці");
+      if (confirm("Почати чат заново? Прогрес карток збережеться.")) { S.drill.msgs = []; S.drill.cur = null; drillErr = ""; save(); viewDrill(); }
+    };
+    var sk = document.getElementById("dskip");
+    if (sk) sk.onclick = function () { if (drillBusy) return; drillShowModel(); drillAsk(); drillErr = ""; viewDrill(); };
+    var form = document.getElementById("dform");
+    if (form) {
+      var ta = document.getElementById("dmsg");
+      ta.value = S.settings.ddraft || "";
+      var grow = function () { ta.style.height = "auto"; ta.style.height = Math.min(160, ta.scrollHeight) + "px"; };
+      ta.oninput = function () { S.settings.ddraft = ta.value; grow(); save(); };
+      bindMic(ta, function (v) { S.settings.ddraft = v; grow(); });
+      form.onsubmit = function (e) {
+        e.preventDefault(); stopMic();
+        var v = ta.value.trim();
+        if (!v) { drillErr = "Скажіть або напишіть відповідь польською."; return viewDrill(); }
+        drillSend(v);
+      };
+      if (!drillBusy) setTimeout(function () { window.scrollTo(0, document.body.scrollHeight); }, 0);
+    }
+  }
+  function drillSend(text) {
+    if (drillBusy || !S.drill.cur) return;
+    var M = S.drill, d = byId[M.cur];
+    if (!d) { drillAsk(); return viewDrill(); }
+    drillErr = "";
+    M.msgs.push({ role: "karina", text: text });
+    S.settings.ddraft = "";
+    // нитка поточного питання — від його появи; раніші відповіді — для контексту уточнень
+    var start = 0;
+    for (var i = M.msgs.length - 1; i >= 0; i--) if (M.msgs[i].qid === M.cur) { start = i; break; }
+    var thread = M.msgs.slice(start).filter(function (m) { return m.role !== "note"; }).map(function (m) { return { role: m.role, text: m.text }; });
+    var earlier = M.msgs.slice(0, start).filter(function (m) { return m.role === "karina"; }).map(function (m) { return m.text; });
+    var first = thread.filter(function (m) { return m.role === "karina"; }).length === 1;
+    drillBusy = true; save(); viewDrill();
+    api({ mode: "drill", question: d.q, model_answer: d.a, thread: thread, earlier: earlier, allow_followup: M.follows < MAX_FOLLOWUPS })
+      .then(function (r) {
+        var last = M.msgs[M.msgs.length - 1];
+        last.fb = { verdict: r.verdict, feedback_uk: r.feedback_uk, corrected_pl: r.corrected_pl };
+        if (first) {
+          var g = r.verdict === "good" ? 2 : r.verdict === "almost" ? 1 : r.verdict === "wrong" ? 0 : null;
+          if (g !== null) { S.srs = SRS.grade(S.srs, M.cur, g, Date.now()); if (g === 0) S.wrong[M.cur] = 1; }
+        }
+        if (r.followup_pl && M.follows < MAX_FOLLOWUPS) {
+          M.follows++;
+          M.msgs.push({ role: "examiner", text: r.followup_pl, tr: r.followup_uk });
+        } else {
+          drillShowModel();
+          drillAsk();
+        }
+        touch("chats");
+      })
+      .catch(function (e) {
+        drillErr = aiError(e);
+        var m = M.msgs.pop(); S.settings.ddraft = m.text;
+        save();
+      })
+      .then(function () { drillBusy = false; if (location.hash.indexOf("#/drill") === 0) viewDrill(); });
+  }
+
   // ---------- моя історія ----------
   var STORY = [
     { id: "who", t: "Хто я", q: "Proszę się przedstawić.", hint: "Ім’я, вік, звідки ви, де живете, з ким." },
@@ -796,6 +952,7 @@
   // ---------- роутер ----------
   function render() {
     stopTimer();
+    stopMic();
     var p = (location.hash.replace(/^#\/?/, "") || "").split("/");
     var r = p[0];
     if (r !== "run" && T && !T.done && T.kind === "exam") T = null;
@@ -803,6 +960,7 @@
     else if (r === "tests") viewTests();
     else if (r === "run") viewRun(p[1], p[2]);
     else if (r === "chat") viewChat();
+    else if (r === "drill") viewDrill();
     else if (r === "me") viewMe();
     else if (r === "story") viewStory();
     else if (r === "plan") viewPlan();

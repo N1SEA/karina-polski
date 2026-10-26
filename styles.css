@@ -77,7 +77,7 @@ a { color: var(--pink-strong); }
 /* нижня панель */
 .tabs {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 5;
-  display: grid; grid-template-columns: repeat(5, 1fr);
+  display: grid; grid-template-columns: repeat(6, 1fr);
   background: var(--surface);
   background: color-mix(in srgb, var(--surface) 94%, transparent);
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -88,7 +88,7 @@ a { color: var(--pink-strong); }
 .tabs svg { width: 24px; height: 24px; }
 .tabs a.on { color: var(--pink-strong); font-weight: 600; }
 .tabs a.on .pill { background: var(--pink-soft); }
-.tabs .pill { display: flex; align-items: center; justify-content: center; width: 52px; height: 30px; border-radius: 99px; transition: background .2s; }
+.tabs .pill { display: flex; align-items: center; justify-content: center; width: 46px; height: 30px; border-radius: 99px; transition: background .2s; }
 body.focus .tabs { display: none; }
 body.focus { padding-bottom: env(safe-area-inset-bottom); }
 
@@ -271,6 +271,18 @@ body.focus { padding-bottom: env(safe-area-inset-bottom); }
 .send { width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--pink); color: var(--on-pink); flex: none; display: flex; align-items: center; justify-content: center; }
 .send svg { width: 22px; height: 22px; }
 .typing { align-self: flex-start; color: var(--muted); font-size: 14px; display: flex; gap: 8px; align-items: center; }
+
+.msg.ex.follow { border-color: var(--pink-mid); }
+.note { align-self: stretch; background: var(--pink-soft); color: var(--pink-ink); border-radius: 16px; padding: 10px 12px; font-size: 15px; line-height: 1.45; }
+.note .lbl { display: block; font-size: 11px; opacity: .8; margin-bottom: 2px; }
+.note p { margin: 0; }
+.note .pron { margin-top: 6px; background: color-mix(in srgb, var(--surface) 60%, transparent); }
+.note .au { margin-top: 6px; color: inherit; opacity: .8; }
+.mic { width: 48px; height: 48px; border-radius: 50%; border: 0; background: var(--pink-soft); color: var(--pink-ink); flex: none; display: flex; align-items: center; justify-content: center; }
+.mic svg { width: 22px; height: 22px; }
+.mic.on { background: var(--pink); color: var(--on-pink); box-shadow: 0 0 0 4px color-mix(in srgb, var(--pink) 30%, transparent); animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 9px color-mix(in srgb, var(--pink) 10%, transparent); } }
+@media (prefers-reduced-motion: reduce) { .mic.on { animation: none; } }
 
 /* форми */
 select { appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 36px !important; }

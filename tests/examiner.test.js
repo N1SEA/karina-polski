@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { buildChatMessages, buildCheckMessages, buildGenerateMessages, cleanGenerated, parseResult, handle, MODEL, BadRequest } from "../lib/examiner.js";
+import { buildChatMessages, buildCheckMessages, buildGenerateMessages, buildDrillMessages, cleanGenerated, parseResult, handle, MODEL, BadRequest } from "../lib/examiner.js";
 
 test("generate: topic required, count clamped, existing listed", () => {
   assert.throws(() => buildGenerateMessages({ topic: "" }), BadRequest);
@@ -128,4 +128,33 @@ test("basis goes into every prompt, with a default", async () => {
 test("null turns in history are ignored, not a server error", () => {
   const m = buildChatMessages([null, { role: "examiner", text: "Q?" }, 5, { role: "karina", text: "A" }]);
   assert.deepEqual(m.map((x) => x.role), ["user", "assistant", "user"]);
+});
+
+test("drill: needs a question and Karina's last answer", () => {
+  assert.throws(() => buildDrillMessages({ question: "", thread: [{ role: "karina", text: "x" }] }), BadRequest);
+  assert.throws(() => buildDrillMessages({ question: "Q?", thread: [{ role: "examiner", text: "Q?" }] }), BadRequest);
+  assert.throws(() => buildDrillMessages({ question: "Q?", thread: [] }), BadRequest);
+});
+
+test("drill: prompt carries model answer, thread, earlier answers and follow-up permission", () => {
+  const m = buildDrillMessages({
+    question: "Co to jest opłatek?", model_answer: "Cienki wafel.",
+    thread: [{ role: "examiner", text: "Co to jest opłatek?" }, null, { role: "karina", text: "to wafel" }],
+    earlier: ["Mam dwoje dzieci."], allow_followup: true,
+  });
+  const c = m[0].content;
+  assert.match(c, /Wzorcowa odpowiedź: Cienki wafel\./);
+  assert.match(c, /Kandydatka: to wafel/);
+  assert.match(c, /- Mam dwoje dzieci\./);
+  assert.match(c, /dozwolone \(najwyżej jedno\)/);
+  assert.match(buildDrillMessages({ question: "Q?", thread: [{ role: "karina", text: "a" }] })[0].content, /niedozwolone/);
+});
+
+test("handle: drill returns feedback and optional follow-up", async () => {
+  const reply = { verdict: "almost", feedback_uk: "f", corrected_pl: "c", followup_pl: "A dlaczego?", followup_uk: "А чому?" };
+  const cap = {};
+  const out = await handle({ method: "POST", headers: {}, body: { mode: "drill", question: "Q?", thread: [{ role: "karina", text: "a" }], allow_followup: true } }, { client: fakeClient(textReply(reply), cap) });
+  assert.equal(out.status, 200);
+  assert.equal(out.json.followup_pl, "A dlaczego?");
+  assert.ok(cap.params.output_config.format.schema.required.includes("followup_pl"));
 });
