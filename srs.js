@@ -79,7 +79,9 @@ var SRS = (function () {
   // Вопрос с 4 вариантами: неверные берём из той же темы, при нехватке — из любой.
   function buildQuiz(item, pool, rng, n) {
     n = n || 4;
-    var others = pool.filter(function (x) { return x !== item && x.a !== item.a; });
+    var seen = {};
+    seen[item.a] = 1;
+    var others = pool.filter(function (x) { if (seen[x.a]) return false; seen[x.a] = 1; return true; });
     var same = shuffle(others.filter(function (x) { return x.cat === item.cat; }), rng);
     var rest = shuffle(others.filter(function (x) { return x.cat !== item.cat; }), rng);
     var wrong = same.concat(rest).slice(0, n - 1).map(function (x) { return x.a; });
@@ -88,10 +90,11 @@ var SRS = (function () {
   }
 
   // План на 30 дней: 3 недели по темам, 4-я — повторение и пробные собеседования.
+  // «Про себе» (разом із польськими коренями) — на першому тижні: це питають завжди.
   var PLAN_WEEKS = [
     ["ratunek", "osobie", "bn", "wn"],
-    ["religijne", "panstwowe", "zwyczaje", "kuchnia"],
-    ["symbole", "historia", "kultura", "geografia"],
+    ["religijne", "panstwowe", "zwyczaje", "kuchnia", "symbole"],
+    ["historia", "kultura", "geografia"],
   ];
   function planDay(day) {
     if (day < 1 || day > 30) return null;
@@ -101,9 +104,8 @@ var SRS = (function () {
     var week = Math.floor((day - 1) / 7);
     var dow = (day - 1) % 7;
     var cats = PLAN_WEEKS[week];
-    if (dow < 4) return { day: day, cats: [cats[dow]], review: false, task: "Нова тема: картки → «Склади» → тест" };
-    if (dow === 4) return { day: day, cats: cats.slice(0, 2), review: true, task: "Повторення: «Пропуски» + розмова з AI" };
-    if (dow === 5) return { day: day, cats: cats.slice(2), review: true, task: "Повторення: «Пропуски» + розмова з AI" };
+    if (dow < cats.length) return { day: day, cats: [cats[dow]], review: false, task: "Нова тема: картки → «Склади» → тест" };
+    if (dow < 6) return { day: day, cats: cats.slice(), review: true, task: "Повторення: «Пропуски» + розмова з AI" };
     return { day: day, cats: cats.slice(), review: true, task: "Іспит за темами тижня + «Моя історія» вголос" };
   }
 
@@ -142,7 +144,7 @@ var SRS = (function () {
   }
 
   // ---------- розбір відповіді для вправ ----------
-  var STOP = ["jest", "są", "się", "nie", "przez", "które", "który", "która", "kiedy", "albo", "żeby", "tego", "także", "czyli", "bardzo", "mówi", "można", "często", "zwykle"];
+  var STOP = ["pan", "pani", "to", "jest", "są", "się", "nie", "przez", "które", "który", "która", "kiedy", "albo", "żeby", "tego", "także", "czyli", "bardzo", "mówi", "można", "często", "zwykle"];
   function sentences(a) {
     // Без lookbehind — старий Safari (iOS < 16.4) його не розбирає.
     var s = String(a), out = [], re = /[.!?…]\s+/g, last = 0, m;
@@ -234,10 +236,10 @@ var SRS = (function () {
     var x = norm(input), y = norm(answer);
     if (!x) return "empty";
     if (x === y) return "exact";
-    if (y.length < 5) return "wrong";
+    if (y.length < 5 || /\d/.test(y)) return "wrong"; // числа й дати — лише точно
     if (lev(x, y) <= 1) return "close";
-    // Інша форма слова (opłatek / opłatkiem): спільний початок і невелика різниця в кінці.
-    if (x.slice(0, 4) === y.slice(0, 4) && lev(x, y) <= Math.max(1, Math.floor(y.length / 3))) return "close";
+    // Інша форма слова (opłatek / opłatkiem і навпаки): спільний початок і невелика різниця в кінці.
+    if (x.slice(0, 4) === y.slice(0, 4) && lev(x, y) <= Math.max(1, Math.floor(Math.max(x.length, y.length) / 3))) return "close";
     return "wrong";
   }
 

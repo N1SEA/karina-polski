@@ -16,7 +16,11 @@
       return d && typeof d === "object" && ["cat", "q", "qu", "a", "au", "at"].every(function (k) { return typeof d[k] === "string" && d[k]; });
     });
     s.chat = (Array.isArray(o.chat) ? o.chat : []).filter(function (m) { return m && typeof m.text === "string" && (m.role === "examiner" || m.role === "karina"); }).slice(-MAX_CHAT);
-    if (typeof s.settings.start !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(s.settings.start)) s.settings.start = dstr(Date.now());
+    var isDate = function (v) { return typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v); };
+    if (!isDate(s.settings.start)) s.settings.start = dstr(Date.now());
+    if (s.settings.interview && !isDate(s.settings.interview)) delete s.settings.interview;
+    ["srs", "tickets"].forEach(function (k) { Object.keys(s[k]).forEach(function (id) { if (!s[k][id] || typeof s[k][id] !== "object") delete s[k][id]; }); });
+    ["story"].forEach(function (k) { Object.keys(s[k]).forEach(function (id) { if (typeof s[k][id] !== "string") delete s[k][id]; }); });
     return s;
   }
   var S = normalize(read());
@@ -30,15 +34,22 @@
     }
   }
 
-  var byId = {};
-  function allItems() { return DATA.concat(S.extra); }
-  function reindex() { byId = {}; allItems().forEach(function (d) { byId[SRS.idOf(d)] = d; }); }
-  function ids(filter) { return allItems().filter(filter || function () { return true; }).map(SRS.idOf); }
+  var byId = {}, ITEMS = [];
+  function allItems() { return ITEMS; }
+  function reindex() {
+    byId = {};
+    ITEMS = DATA.concat(S.extra).map(function (raw) { var d = Object.assign({}, raw); d._id = SRS.idOf(raw); return d; });
+    ITEMS.forEach(function (d) { byId[d._id] = d; });
+  }
+  function ids(filter) { return ITEMS.filter(filter || function () { return true; }).map(function (d) { return d._id; }); }
   reindex();
   var CAT = {}; CATS.forEach(function (c) { CAT[c.id] = c; });
   // Особисті питання з шаблонами [..] не годяться для тестів з варіантами.
   function quizable(d) { return d.a.indexOf("[") < 0; }
-  var TICKETS = SRS.tickets(DATA.filter(quizable).map(SRS.idOf), 10);
+  var TICKETS = SRS.tickets(ITEMS.filter(function (d) { return !d.ai && quizable(d); }).map(function (d) { return d._id; }), 10);
+  // Результат білета зберігається за його складом: зміни в банку не переносять оцінки на інші білети.
+  function ticketKey(i) { return TICKETS[i] ? "t" + SRS.idOf({ cat: "", q: TICKETS[i].join(",") }) : ""; }
+  function ticketResult(i) { var r = S.tickets[ticketKey(i)]; return r && typeof r === "object" ? r : null; }
 
   // ---------- дати ----------
   function dstr(t) { var d = new Date(t); return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
@@ -68,9 +79,12 @@
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function pron(at) { return esc(at).replace(/[АЕЄИІЇОУЮЯ]/g, '<b class="st">$&</b>'); }
   function plural(n, one, few, many) { var m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? one : m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20) ? few : many; }
+  // Одна постійна live-область, щоб екранні читачі оголошували кожне повідомлення.
+  var toastEl = null, toastTimer = null;
   function toast(msg) {
-    var el = document.createElement("div"); el.className = "toast"; el.setAttribute("role", "status"); el.textContent = msg;
-    document.body.appendChild(el); setTimeout(function () { el.remove(); }, 2600);
+    if (!toastEl) { toastEl = document.createElement("div"); toastEl.className = "toast"; toastEl.setAttribute("role", "status"); toastEl.hidden = true; document.body.appendChild(toastEl); }
+    toastEl.textContent = msg; toastEl.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { toastEl.hidden = true; }, 2600);
   }
   function go(h) { if (location.hash === h) render(); else location.hash = h; }
 
@@ -154,15 +168,15 @@
 
   // Підстава заяви — підлаштовує AI-питання. Порожньо = польське походження.
   var BASES = [
-    ["origin", "Польське походження", "polskie pochodzenie (art. 195 ust. 1 pkt 3 ustawy o cudzoziemcach)"],
+    ["great", "Польське походження — двоє прадідів", "polskie pochodzenie (art. 195 ust. 1 pkt 3 ustawy o cudzoziemcach): dwoje pradziadków narodowości polskiej"],
+    ["origin", "Польське походження — батьки або дід/баба", "polskie pochodzenie (art. 195 ust. 1 pkt 3 ustawy o cudzoziemcach): rodzic lub dziadek narodowości polskiej"],
     ["karta", "Карта поляка", "posiadacz Karty Polaka, zamiar osiedlenia się w Polsce na stałe"],
     ["marriage", "Шлюб із громадянином Польщі", "małżeństwo z obywatelem polskim (co najmniej 3 lata, 2 lata pobytu czasowego)"],
     ["other", "Інше (вписати)", ""],
   ];
   function basisText() {
-    var b = S.settings.basis || "origin";
-    if (b === "other") return S.settings.basisOther || "";
-    return (BASES.filter(function (x) { return x[0] === b; })[0] || BASES[0])[2];
+    var b = S.settings.basis || "great";
+    return b === "other" ? S.settings.basisOther || "" : (BASES.filter(function (x) { return x[0] === b; })[0] || BASES[0])[2];
   }
 
   // ---------- головна ----------
@@ -176,7 +190,7 @@
     frame({ tab: "home", title: "Polski na pobyt", aside: streak() ? ic("heart", "ic") + " " + streak() + " " + plural(streak(), "день", "дні", "днів") + " поспіль" : "" });
     var n = dayN(), left = daysLeft(), t = today(), plan = SRS.planDay(n);
     var all = SRS.stats(ids(), S.srs);
-    var passed = Object.keys(S.tickets).filter(function (k) { return S.tickets[k].errors === 0; }).length;
+    var passed = TICKETS.filter(function (_, i) { var r = ticketResult(i); return r && r.errors === 0; }).length;
     var wrongN = Object.keys(S.wrong).filter(function (id) { return byId[id] && quizable(byId[id]); }).length;
     var topic = plan.cats.length ? plan.cats.map(function (c) { return CAT[c].name; }).join(", ") : "усі теми";
     var steps = [
@@ -428,11 +442,11 @@
 
   // ---------- тести (як ПДР) ----------
   var T = null;
-  function ticketState(i) { var r = S.tickets[i]; return !r ? "" : r.errors === 0 ? "pass" : "fail"; }
+  function ticketState(i) { var r = ticketResult(i); return !r ? "" : r.errors === 0 ? "pass" : "fail"; }
   function viewTests() {
     frame({ tab: "tests", title: "Тести" });
     var wrongN = Object.keys(S.wrong).filter(function (id) { return byId[id] && quizable(byId[id]); }).length;
-    var nextT = TICKETS.findIndex(function (_, i) { return !S.tickets[i]; });
+    var nextT = TICKETS.findIndex(function (_, i) { return !ticketResult(i); });
     view.innerHTML =
       '<a class="hero" href="#/run/exam">' + ic("exam") + '<div class="grow"><b>Іспит</b><span>20 питань · 20 хв · до 2 помилок</span></div>' + ic("chev") + "</a>" +
       '<div class="modes">' +
@@ -515,7 +529,7 @@
 
     view.querySelectorAll(".opt").forEach(function (b) {
       b.onclick = function () {
-        if (T.chosen !== null) return;
+        if (T.chosen !== null || Date.now() - lastAdvance < 400) return;
         T.chosen = +b.dataset.k;
         var ok = T.chosen === T.quiz.correctIndex;
         T.res.push(ok); T.picks.push(T.quiz.options[T.chosen]);
@@ -534,11 +548,15 @@
     if (T.limit) timer = setInterval(function () {
       var left = T.limit - (Date.now() - T.started);
       var c = document.getElementById("clock"); if (c) c.textContent = fmt(left);
-      if (left <= 0) { T.timeout = true; finish(); }
+      if (left <= 0) { if (T.res.length < T.list.length) T.timeout = true; finish(); }
     }, 1000);
   }
   function isLast() { return !T.endless && (T.i >= T.list.length - 1 || T.failedEarly); }
+  var lastAdvance = 0;
   function advance() {
+    // Захист від подвійного тапу: другий дотик не повинен вибрати відповідь у наступному питанні.
+    if (Date.now() - lastAdvance < 400) return;
+    lastAdvance = Date.now();
     if (isLast()) return finish();
     T.i++; T.chosen = null; T.quiz = null;
     if (T.endless && T.i >= T.list.length) T.list = T.list.concat(SRS.shuffle(ids(quizable)));
@@ -549,7 +567,7 @@
     if (T.chosen === null && !T.timeout && T.endless) { /* марафон без відповіді на поточне */ }
     T.done = true;
     var errors = T.res.filter(function (x) { return !x; }).length;
-    if (T.kind === "ticket") S.tickets[T.arg] = { errors: errors + (T.list.length - T.res.length), at: Date.now() };
+    if (T.kind === "ticket" && ticketKey(+T.arg)) S.tickets[ticketKey(+T.arg)] = { errors: errors + (T.list.length - T.res.length), at: Date.now() };
     if (T.res.length) touch("tests"); else save();
     viewResult(); window.scrollTo(0, 0);
   }
@@ -603,7 +621,7 @@
     view.innerHTML = h;
     view.querySelectorAll("[data-topic]").forEach(function (b) { b.onclick = function () { S.settings.chatTopic = b.dataset.topic; save(); viewChat(); }; });
     var st = document.getElementById("start"); if (st) st.onclick = function () { sendChat(null); };
-    var rs = document.getElementById("reset"); if (rs) rs.onclick = function () { if (confirm("Почати нову розмову?")) { S.chat = []; chatErr = ""; save(); viewChat(); } };
+    var rs = document.getElementById("reset"); if (rs) rs.onclick = function () { if (busy) return toast("Зачекайте на відповідь урядниці"); if (confirm("Почати нову розмову?")) { S.chat = []; chatErr = ""; save(); viewChat(); } };
     var form = document.getElementById("form");
     if (form) {
       var ta = document.getElementById("msg");
@@ -653,7 +671,7 @@
     view.innerHTML = '<div class="soft small">Це питання ставлять завжди. Напишіть свою розповідь польською простими реченнями, перевірте з AI і перечитуйте щодня. Головне — правда і збіг із документами.</div>' +
       STORY.map(function (s) {
         return '<div class="card"><b>' + esc(s.t) + '</b><p class="q" lang="pl" style="font-size:17px;margin:6px 0 2px">' + esc(s.q) + '</p><p class="hint" style="margin:0 0 10px">' + esc(s.hint) + "</p>" +
-          '<textarea data-s="' + s.id + '" lang="pl" placeholder="Napisz po polsku…">' + esc(S.story[s.id] || "") + "</textarea>" +
+          '<textarea data-s="' + s.id + '" lang="pl" aria-label="' + esc(s.t) + '" placeholder="Napisz po polsku…">' + esc(S.story[s.id] || "") + "</textarea>" +
           '<div id="fb-' + s.id + '" style="margin-top:8px">' + fbHtml(storyFb[s.id]) + "</div>" +
           '<button class="btn ghost block" data-chk="' + s.id + '" style="margin-top:8px">' + ic("sparkle") + " Перевірити з AI</button></div>";
       }).join("");
@@ -678,7 +696,7 @@
     frame({ tab: "me", title: "Я" });
     var all = SRS.stats(ids(), S.srs);
     view.innerHTML =
-      '<div class="stats"><div class="stat"><b>' + all.percent + '%</b><span>вивчено</span></div><div class="stat"><b>' + streak() + "</b><span>" + plural(streak(), "день", "дні", "днів") + " поспіль</span></div><div class=\"stat\"><b>" + allItems().length + "</b><span>питань у базі</span></div></div>" +
+      '<div class="stats"><div class="stat"><b>' + all.percent + '%</b><span>вивчено</span></div><div class="stat"><b>' + streak() + "</b><span>" + plural(streak(), "день", "дні", "днів") + " поспіль</span></div><div class=\"stat\"><b>" + allItems().length + "</b><span>" + plural(allItems().length, "питання", "питання", "питань") + " у базі</span></div></div>" +
       '<div class="list" style="margin-top:12px">' +
       '<a href="#/story">' + ic("heart") + "Моя історія" + ic("chev", "ic chev") + "</a>" +
       '<a href="#/plan">' + ic("cal") + "План на 30 днів" + ic("chev", "ic chev") + "</a>" +
@@ -715,7 +733,7 @@
     frame({ tab: "me", title: "Налаштування", back: true });
     view.innerHTML =
       '<label class="f" for="bs">Підстава заяви</label><select id="bs">' + BASES.map(function (b) {
-        return '<option value="' + b[0] + '"' + ((S.settings.basis || "origin") === b[0] ? " selected" : "") + ">" + esc(b[1]) + "</option>";
+        return '<option value="' + b[0] + '"' + ((S.settings.basis || "great") === b[0] ? " selected" : "") + ">" + esc(b[1]) + "</option>";
       }).join("") + "</select>" +
       '<input type="text" id="bso" lang="pl" placeholder="Np. praca, studia…" value="' + esc(S.settings.basisOther || "") + '"' + (S.settings.basis === "other" ? "" : " hidden") + ' style="margin-top:8px">' +
       '<p class="hint">AI-урядниця ставитиме питання саме під цю підставу.</p>' +
@@ -764,7 +782,8 @@
     document.getElementById("pc").onchange = function (e) { S.settings.passcode = e.target.value.trim(); save(); toast("Збережено"); };
     document.getElementById("wipe").onclick = function () {
       if (!confirm("Видалити весь прогрес, помилки, розмову та історію? Це не можна скасувати.")) return;
-      var keep = { interview: S.settings.interview, passcode: S.settings.passcode, start: todayStr() };
+      var keep = { start: todayStr() };
+      ["interview", "passcode", "basis", "basisOther", "hidePron", "hideTr", "chatTopic"].forEach(function (k) { if (S.settings[k] != null) keep[k] = S.settings[k]; });
       S = normalize({ settings: keep, extra: S.extra }); T = null; L.id = null;
       save(); toast("Прогрес скинуто"); go("#/");
     };

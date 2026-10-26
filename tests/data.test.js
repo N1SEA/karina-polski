@@ -41,6 +41,10 @@ test("each category has enough entries for a 4-option quiz", () => {
   }
 });
 
+test("every category in the 30-day plan exists in the bank", () => {
+  for (let day = 1; day <= 30; day++) for (const c of SRS.planDay(day).cats) assert.ok(catIds.has(c), `plan day ${day}: unknown ${c}`);
+});
+
 test("every category is reachable from the 30-day plan", () => {
   const planned = new Set();
   for (let day = 1; day <= 30; day++) SRS.planDay(day).cats.forEach((c) => planned.add(c));

@@ -108,3 +108,10 @@ test("planDay covers 30 days and rejects out-of-range days", () => {
   assert.equal(SRS.planDay(25).review, true);
   for (let d = 1; d <= 30; d++) assert.ok(SRS.planDay(d).task);
 });
+
+test("buildQuiz never repeats an option even with duplicate answers in the pool", () => {
+  const pool = [{ cat: "x", a: "A" }, { cat: "x", a: "B" }, { cat: "x", a: "B" }, { cat: "x", a: "C" }, { cat: "y", a: "D" }];
+  const qz = SRS.buildQuiz(pool[0], pool);
+  assert.equal(new Set(qz.options).size, qz.options.length);
+  assert.equal(qz.options.length, 4);
+});
