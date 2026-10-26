@@ -1,0 +1,162 @@
+[
+ {
+  "cat": "osobie",
+  "q": "Uprzedzam Panią o odpowiedzialności karnej za składanie fałszywych zeznań. Czy Pani rozumie?",
+  "qu": "Попереджаю Вас про кримінальну відповідальність за неправдиві свідчення. Ви розумієте?",
+  "a": "Tak, rozumiem. Będę mówić prawdę.",
+  "au": "Так, розумію. Я казатиму правду.",
+  "at": "так, розУмєм. бЕнде мУвіць прАвде."
+ },
+ {
+  "cat": "osobie",
+  "q": "W jakim stopniu zna Pani język polski? Czy potrzebuje Pani tłumacza?",
+  "qu": "Наскільки добре Ви знаєте польську мову? Чи потрібен Вам перекладач?",
+  "a": "Nie potrzebuję tłumacza. Mówię po polsku na poziomie średnim i ciągle się uczę. Jeśli czegoś nie zrozumiem, poproszę o powtórzenie.",
+  "au": "Перекладач мені не потрібен. Я говорю польською на середньому рівні й постійно вчуся. Якщо чогось не зрозумію, попрошу повторити.",
+  "at": "нє потшебУє твумАча. мУвє по пОльску на позьОмє сьрЕднім і цьОнґле сє Уче. Єсьлі чЕґось нє зрозУмєм, попрОше о повтужЕнє."
+ },
+ {
+  "cat": "osobie",
+  "q": "Kiedy ostatnio wjechała Pani do Polski?",
+  "qu": "Коли Ви востаннє в'їхали до Польщі?",
+  "a": "Ostatnio wjechałam do Polski [data]. Od tego czasu mieszkam tu cały czas.",
+  "au": "Востаннє я в'їхала до Польщі [дата]. Відтоді весь час живу тут.",
+  "at": "остАтньо в'єхАвам до пОльскі [data]. од тЕґо чАсу мЄшкам ту цАви час."
+ },
+ {
+  "cat": "osobie",
+  "q": "Czy ubiegała się Pani wcześniej o Kartę Polaka?",
+  "qu": "Чи подавали Ви раніше документи на Карту поляка?",
+  "a": "Nie, nie ubiegałam się. / Tak, ubiegałam się w [rok] roku w [konsulacie w ...].",
+  "au": "Ні, не подавала. / Так, подавала в [рік] році в [консульстві в ...].",
+  "at": "нє, нє убєґАвам сє. / так, убєґАвам сє в [rok] рОку в [konsulacie w ...]."
+ },
+ {
+  "cat": "osobie",
+  "q": "Kiedy dowiedziała się Pani, że ma polskie pochodzenie?",
+  "qu": "Коли Ви дізналися, що маєте польське походження?",
+  "a": "Wiedziałam o tym od dziecka. [Dziadek] opowiadał, że jego rodzice byli Polakami. Później znalazłam dokumenty.",
+  "au": "Я знала про це з дитинства. [Дідусь] розповідав, що його батьки були поляками. Пізніше я знайшла документи.",
+  "at": "вєдзЯвам о тим од дзЄцка. [Dziadek] оповЯдав, же Єґо родзІце бИлі полакАмі. пУзьнєй зналАзвам докумЕнти."
+ },
+ {
+  "cat": "osobie",
+  "q": "Jak jest Pani spokrewniona z pradziadkami?",
+  "qu": "Ким Вам доводяться прадідусь і прабабуся?",
+  "a": "To rodzice mojego [dziadka]. [Dziadek] to ojciec mojej [mamy], a ja jestem córką [mamy]. Mam akty urodzenia: swój, [mamy] i [dziadka].",
+  "au": "Це батьки мого [дідуся]. [Дідусь] — батько моєї [мами], а я — донька [мами]. У мене є свідоцтва про народження: моє, [мами] і [дідуся].",
+  "at": "то родзІце моЄґо [dziadka]. [Dziadek] то Ойцєц мОєй [mamy], а я Єстем цУркон [mamy]. мам Акти уродзЕня: свуй, [mamy] і [dziadka]."
+ },
+ {
+  "cat": "osobie",
+  "q": "Dlaczego w dokumentach Pani [mamy] jest wpisana narodowość ukraińska?",
+  "qu": "Чому в документах Вашої [мами] записана українська національність?",
+  "a": "W ZSRR często wpisywano narodowość ukraińską albo rosyjską. Ludzie bali się pisać, że są Polakami, bo Polaków represjonowano. Ale w rodzinie zawsze pamiętaliśmy, że jesteśmy Polakami.",
+  "au": "В СРСР часто записували українську або російську національність. Люди боялися писати, що вони поляки, бо поляків репресували. Але в родині ми завжди пам'ятали, що ми поляки.",
+  "at": "в зетесерЕр чЕнсто вписивАно народОвосьць украІньскон Албо росИйскон. лУдзє бАлі сє пІсаць, же сон полакАмі, бо полАкуф репресьйоновАно. Але в родзІнє зАвше памєнтАлісьми, же єстЕсьми полакАмі."
+ },
+ {
+  "cat": "osobie",
+  "q": "Jak Pani przodkowie znaleźli się na Ukrainie?",
+  "qu": "Як Ваші предки опинилися в Україні?",
+  "a": "Te ziemie przez wieki należały do Rzeczypospolitej i mieszkało tam dużo Polaków. Moja rodzina mieszkała tam od pokoleń. Później granice się zmieniły i te ziemie weszły do ZSRR.",
+  "au": "Ці землі століттями належали Речі Посполитій, і там жило багато поляків. Моя родина жила там з покоління в покоління. Пізніше кордони змінилися, і ці землі увійшли до СРСР.",
+  "at": "те зЄмє пшес вЄкі належАви до жечипосполІтей і мєшкАво там дУжо полАкуф. мОя родзІна мєшкАва там од поколЕнь. пУзьнєй ґранІце сє змєнІви і те зЄмє вЕшви до зетесерЕр."
+ },
+ {
+  "cat": "osobie",
+  "q": "Dlaczego Pani rodzina nie wyjechała do Polski wcześniej?",
+  "qu": "Чому Ваша родина не виїхала до Польщі раніше?",
+  "a": "W ZSRR nie można było swobodnie wyjechać za granicę. Granica była zamknięta. Później rodzina miała tam dom i pracę. Teraz ja zdecydowałam się przyjechać i zostać w Polsce na stałe.",
+  "au": "З СРСР не можна було вільно виїхати за кордон. Кордон був закритий. Пізніше родина мала там дім і роботу. Тепер я вирішила приїхати й залишитися в Польщі назавжди.",
+  "at": "в зетесерЕр нє мОжна бИво свобОднє виЄхаць за ґранІце. ґранІца бИва замкнЄнта. пУзьнєй родзІна мЯва там дом і прАце. тЕрас я здецидовАвам сє пшиЄхаць і зОстаць в пОльсце на стАве."
+ },
+ {
+  "cat": "osobie",
+  "q": "Jak pradziadkowie pielęgnowali polskość?",
+  "qu": "Як прадідусь і прабабуся зберігали свою польськість?",
+  "a": "W domu mówili po polsku, modlili się po polsku i chodzili do kościoła katolickiego. Obchodzili Wigilię z opłatkiem i Wielkanoc ze święconką. Te tradycje przekazali [dziadkowi], a on nam.",
+  "au": "Удома вони говорили польською, молилися польською і ходили до католицького костелу. Святкували Святвечір з облаткою і Великдень з освяченим кошиком. Ці традиції вони передали [дідусеві], а він — нам.",
+  "at": "в дОму мувІлі по пОльску, модлІлі сє по пОльску і ходзІлі до косьцьОва католіцкЄґо. обходзІлі віґІлє з опвАткєм і вєлькАноц зе сьвєнцОнкон. те традИцьє пшеказАлі [dziadkowi], а он нам."
+ },
+ {
+  "cat": "osobie",
+  "q": "Czy miała Pani kontakt z innymi osobami polskiego pochodzenia na Ukrainie?",
+  "qu": "Чи мали Ви контакт з іншими людьми польського походження в Україні?",
+  "a": "Tak, z rodziną i sąsiadami, którzy też mieli polskie korzenie. Razem chodziliśmy do kościoła. / Nie, tylko z rodziną.",
+  "au": "Так, з родиною і сусідами, які теж мали польське коріння. Ми разом ходили до костелу. / Ні, тільки з родиною.",
+  "at": "так, з родзІнон і сонсядАмі, ктУжи теш мЄлі пОльскє кожЕнє. рАзем ходзІлісьми до косьцьОва. / нє, тИлько з родзІнон."
+ },
+ {
+  "cat": "osobie",
+  "q": "Skąd czerpie Pani wiedzę o historii i kulturze Polski?",
+  "qu": "Звідки Ви берете знання про історію та культуру Польщі?",
+  "a": "Z opowieści rodziny, z książek i z internetu. Oglądam polskie filmy i wiadomości. Najwięcej uczę się w Polsce, bo tu mieszkam i rozmawiam z Polakami.",
+  "au": "З розповідей родини, з книжок та інтернету. Дивлюся польські фільми й новини. Найбільше я вчуся в Польщі, бо тут живу й розмовляю з поляками.",
+  "at": "з оповЄсьці родзІни, с ксьОнжек і з інтернЕту. оґлОндам пОльскє фІльми і вядомОсьці. найвЄнцей Уче сє в пОльсце, бо ту мЄшкам і розмАвям з полакАмі."
+ },
+ {
+  "cat": "osobie",
+  "q": "Czy myślała Pani o kupnie mieszkania w Polsce?",
+  "qu": "Чи думали Ви про купівлю житла в Польщі?",
+  "a": "Tak. Teraz wynajmuję mieszkanie w [miasto], ale w przyszłości chcę kupić własne mieszkanie, bo chcę zostać w Polsce na zawsze.",
+  "au": "Так. Зараз я винаймаю житло в [місто], але в майбутньому хочу купити власне, бо хочу залишитися в Польщі назавжди.",
+  "at": "так. тЕрас винаймУє мєшкАнє в [miasto], Але в пшишвОсьці хце кУпіць ввАсне мєшкАнє, бо хце зОстаць в пОльсце на зАвше."
+ },
+ {
+  "cat": "osobie",
+  "q": "Czy chciałaby Pani coś dodać na koniec rozmowy?",
+  "qu": "Чи хотіли б Ви щось додати наприкінці розмови?",
+  "a": "Tak. Polska jest dla mnie bardzo ważna, to kraj moich przodków. Chcę tu żyć i pracować na stałe. Dziękuję za rozmowę.",
+  "au": "Так. Польща для мене дуже важлива, це країна моїх предків. Я хочу тут жити й працювати постійно. Дякую за розмову.",
+  "at": "так. пОльска єст для мнє бАрдзо вАжна, то край мОіх пшОткуф. хце ту жиць і працОваць на стАве. дзєнкУє за розмОве."
+ },
+ {
+  "cat": "osobie",
+  "q": "Dlaczego nie uczyła się Pani polskiego wcześniej?",
+  "qu": "Чому Ви не вчили польську раніше?",
+  "a": "Na Ukrainie w mojej szkole nie było języka polskiego. W domu znaliśmy tylko modlitwy, kolędy i trochę polskich słów. Zawsze chciałam dobrze nauczyć się polskiego. Teraz mieszkam w Polsce i uczę się codziennie.",
+  "au": "В Україні в моїй школі не було польської мови. Удома ми знали тільки молитви, колядки і трохи польських слів. Я завжди хотіла добре вивчити польську. Тепер я живу в Польщі й учуся щодня.",
+  "at": "на украІнє в мОєй шкОле нє бИво єнзИка польскЄґо. в дОму знАлісьми тИлько модлІтви, колЕнди і трОхе пОльскіх свуф. зАвше хцЯвам дОбже наУчиць сє польскЄґо. тЕрас мЄшкам в пОльсце і Уче сє цодзЄннє."
+ },
+ {
+  "cat": "bn",
+  "q": "Proszę opowiedzieć po kolei o świętach Bożego Narodzenia, od Adwentu do Trzech Króli.",
+  "qu": "Розкажіть по черзі про різдвяні свята, від Адвенту до Трьох Королів.",
+  "a": "Najpierw jest Adwent, cztery tygodnie przygotowania: rano są roraty, a 6 grudnia mikołajki. 24 grudnia jest Wigilia: opłatek, dwanaście potraw, a o północy Pasterka. 25 i 26 grudnia są święta Bożego Narodzenia. 6 stycznia jest święto Trzech Króli i piszemy na drzwiach K+M+B.",
+  "au": "Спочатку Адвент — чотири тижні підготовки: зранку бувають рорати, а 6 грудня — День святого Миколая. 24 грудня Святвечір: облатка, дванадцять страв, а опівночі Пастерка. 25 і 26 грудня — свята Різдва. 6 січня — свято Трьох Королів, і ми пишемо на дверях K+M+B.",
+  "at": "нАйпєрф єст Адвент, чтЕри тиґОднє пшиґотовАня: рАно сон рорАти, а шустЕґо ґрУдня міковАйкі. двудзЄсти чвАрти ґрУдня єст віґІля: опвАтек, дванАсьцє пОтраф, а о пувнОци пастЕрка. двудзЄсти пьОнти і двудзЄсти шУсти ґрУдня сон сьвЄнта божЕґо народзЕня. шУсти стИчня єст сьвЄнто тшех крУлі і пішЕми на джвях ка+ем+бе."
+ },
+ {
+  "cat": "wn",
+  "q": "Proszę opowiedzieć po kolei o Wielkanocy, od Środy Popielcowej do Poniedziałku Wielkanocnego.",
+  "qu": "Розкажіть по черзі про Великдень, від Попільної середи до Великоднього понеділка.",
+  "a": "W Środę Popielcową zaczyna się Wielki Post, który trwa 40 dni. W Niedzielę Palmową święcimy palmy, a w Wielki Piątek jest Droga Krzyżowa i post. W Wielką Sobotę święcimy koszyczek. W niedzielę jest rezurekcja i śniadanie wielkanocne, a w poniedziałek śmigus-dyngus.",
+  "au": "У Попільну середу починається Великий піст, який триває 40 днів. У Вербну неділю святимо пальми, а у Велику п'ятницю — Хресна дорога і піст. У Велику суботу святимо кошик. У неділю — резурекція і великодній сніданок, а в понеділок — сміґус-динґус (обливаний понеділок).",
+  "at": "в сьрОде попєльцОвон зачИна сє вЄлькі пост, ктУри трфа чтердзЄсьці дні. в нєдзЄле пальмОвон сьвєнцІми пАльми, а в вЄлькі пьОнтек єст дрОґа кшижОва і пост. в вЄлькон собОте сьвєнцІми кошИчек. в нєдзЄле єст резурЕкцья і сьнядАнє вєльканОцне, а в понєдзЯвек сьмІґус-дИнґус."
+ },
+ {
+  "cat": "symbole",
+  "q": "Jaka jest oficjalna nazwa Polski?",
+  "qu": "Яка офіційна назва Польщі?",
+  "a": "Rzeczpospolita Polska.",
+  "au": "Республіка Польща (польською — Rzeczpospolita Polska).",
+  "at": "жечпосполІта пОльска."
+ },
+ {
+  "cat": "symbole",
+  "q": "Kto skomponował muzykę do hymnu?",
+  "qu": "Хто написав музику до гімну?",
+  "a": "Muzyka to stary ludowy mazurek, autor nie jest znany. Słowa napisał Józef Wybicki.",
+  "au": "Музика — це стара народна мазурка, її автор невідомий. Слова написав Юзеф Вибіцький.",
+  "at": "музИка то стАри лудОви мазУрек, Аутор нє єст знАни. свОва напІсав Юзеф вибІцкі."
+ },
+ {
+  "cat": "historia",
+  "q": "Co to była „operacja polska” NKWD?",
+  "qu": "Що таке «польська операція» НКВС?",
+  "a": "To były represje wobec Polaków w ZSRR w latach 1937–1938. NKWD aresztowało ponad 140 tysięcy osób. Co najmniej 111 tysięcy rozstrzelano tylko dlatego, że byli Polakami.",
+  "au": "Це репресії проти поляків в СРСР у 1937–1938 роках. НКВС заарештувало понад 140 тисяч людей. Щонайменше 111 тисяч розстріляли лише за те, що вони були поляками.",
+  "at": "то бИви репрЕсьє вОбец полАкуф в зетесерЕр в лАтах тИсьонц дзєвЄньцьсет тшидзЄсьці сЄдем – тИсьонц дзєвЄньцьсет тшидзЄсьці Осєм. енкавудЕ арештовАво пОнат сто чтердзЄсьці тисЄнци осУп. цо нАймнєй сто єденАсьцє тисЄнци росстшелАно тИлько длатЕґо, же бИлі полакАмі."
+ }
+]
